@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Kaizen Infinities — Website Wireframe</title>
+<style>
+  :root{
+    --ink:#2b2b2b; --line:#999; --line-d:#555; --paper:#fff; --bg:#e7e7e7;
+    --panel:#f4f4f4; --accent:#1f2937; --note-b:#b8860b; --note-bg:#fff8e6;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:"Segoe UI",Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink);}
+  .topbar{background:#111;color:#fff;padding:12px 20px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:200;box-shadow:0 2px 6px rgba(0,0,0,.3);}
+  .topbar .t1{font-weight:800;font-size:15px;letter-spacing:.3px;}
+  .topbar .t2{font-size:11px;color:#bbb;margin-top:2px;}
+  .topbar .meta{font-size:11px;color:#ccc;text-align:right;}
+  .app{display:flex;align-items:flex-start;}
+  .sidebar{width:250px;flex:0 0 250px;background:var(--panel);border-right:2px solid #222;height:calc(100vh - 55px);overflow-y:auto;position:sticky;top:55px;}
+  .sidebar .grp-label{font-size:10px;text-transform:uppercase;letter-spacing:.6px;color:#888;padding:12px 14px 4px;font-weight:700;}
+  .sidebar button{display:block;width:100%;text-align:left;padding:10px 14px;border:none;background:none;cursor:pointer;font-size:12.5px;color:#333;border-bottom:1px solid #ddd;line-height:1.3;}
+  .sidebar button .num{display:inline-block;width:18px;color:#999;font-weight:700;}
+  .sidebar button:hover{background:#e2e2e2;}
+  .sidebar button.active{background:var(--accent);color:#fff;font-weight:700;}
+  .sidebar button.active .num{color:#9ca3af;}
+  .main{flex:1;padding:26px 30px 80px;max-width:1180px;}
+  .page{display:none;}
+  .page.active{display:block;}
+  .wf-page-head{margin-bottom:18px;border-bottom:3px solid #222;padding-bottom:10px;}
+  .wf-page-head .k{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#777;font-weight:700;}
+  .wf-page-head h1{font-size:24px;margin:2px 0 0;}
+  .wf-page-head .k2{font-size:13px;color:#666;margin-top:2px;}
+
+  .wf-section{border:1.5px solid var(--line);background:var(--paper);margin-bottom:18px;padding:22px 20px 18px;position:relative;border-radius:3px;}
+  .wf-section.dark{background:#1c2430;color:#e5e7eb;border-color:#0a0f1a;}
+  .wf-section.dark .wf-heading{color:#fff;}
+  .wf-section.dark .wf-subheading{color:#b6c2d1;}
+  .wf-tag{position:absolute;top:-11px;left:14px;background:#222;color:#fff;font-size:9.5px;letter-spacing:.6px;padding:3px 9px;text-transform:uppercase;font-weight:700;border-radius:2px;}
+  .wf-heading{font-size:19px;font-weight:800;margin:8px 0 6px;}
+  .wf-subheading{font-size:13px;color:#555;margin-bottom:12px;line-height:1.55;max-width:900px;}
+  .wf-eyebrow{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#888;margin-bottom:2px;}
+
+  .wf-btnrow{margin:10px 0 4px;display:flex;gap:10px;flex-wrap:wrap;}
+  .wf-btn{display:inline-block;border:1.5px solid #222;background:#ececec;padding:9px 20px;font-size:11.5px;font-weight:700;border-radius:3px;color:#222;}
+  .wf-btn.secondary{background:#fff;}
+  .dark .wf-btn{border-color:#8ea2c0;background:#2c3a4d;color:#fff;}
+
+  .wf-img{border:1.5px dashed #9aa0a6;background:repeating-linear-gradient(45deg,#f2f2f2,#f2f2f2 10px,#e4e4e4 10px,#e4e4e4 20px);display:flex;align-items:center;justify-content:center;color:#7a7a7a;font-size:10.5px;text-transform:uppercase;letter-spacing:.5px;text-align:center;padding:10px;border-radius:2px;}
+
+  .wf-grid{display:grid;gap:12px;margin-top:8px;}
+  .cols-2{grid-template-columns:repeat(2,1fr);}
+  .cols-3{grid-template-columns:repeat(3,1fr);}
+  .cols-4{grid-template-columns:repeat(4,1fr);}
+  .cols-6{grid-template-columns:repeat(6,1fr);}
+  @media(max-width:900px){.cols-2,.cols-3,.cols-4,.cols-6{grid-template-columns:repeat(2,1fr);}}
+
+  .wf-card{border:1px solid #bbb;padding:12px 13px;background:#fafafa;border-radius:2px;}
+  .wf-card h4{font-size:12.5px;margin:0 0 6px;font-weight:800;color:#222;}
+  .wf-card p.d{font-size:11px;color:#666;margin:0 0 6px;font-style:italic;}
+  .wf-card ul{margin:0;padding-left:15px;font-size:11px;color:#555;}
+  .wf-card ul li{margin-bottom:3px;}
+  .wf-card .more{font-size:10px;color:#999;margin-top:4px;font-style:italic;}
+
+  .wf-icons{display:grid;grid-template-columns:repeat(6,1fr);gap:14px;margin-top:8px;}
+  @media(max-width:900px){.wf-icons{grid-template-columns:repeat(3,1fr);}}
+  .wf-icon-item{text-align:center;font-size:11px;color:#444;}
+  .wf-icon-circ{width:40px;height:40px;border:1.5px solid #999;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;color:#888;margin:0 auto 6px;background:#f0f0f0;}
+
+  .wf-note{border:1.5px dashed var(--note-b);background:var(--note-bg);padding:11px 14px;font-size:11.5px;color:#6b4f00;margin-top:14px;border-radius:2px;}
+  .wf-note strong{display:block;font-size:10.5px;text-transform:uppercase;letter-spacing:.6px;margin-bottom:5px;color:#8a6800;}
+
+  .wf-flow{display:flex;align-items:center;flex-wrap:wrap;gap:6px;font-size:11.5px;font-weight:700;margin-top:6px;}
+  .wf-flow.vertical{flex-direction:column;align-items:flex-start;}
+  .wf-flow .step{border:1.5px solid #222;background:#ececec;padding:8px 13px;border-radius:3px;}
+  .wf-flow .arrow{color:#999;font-weight:900;font-size:14px;}
+  .wf-flow.vertical .arrow{margin-left:20px;}
+
+  .wf-table{width:100%;border-collapse:collapse;font-size:11.5px;margin-top:8px;}
+  .wf-table th,.wf-table td{border:1px solid #bbb;padding:7px 10px;text-align:left;}
+  .wf-table th{background:#e9e9e9;font-weight:700;}
+  .wf-table tr:nth-child(even) td{background:#fafafa;}
+
+  .wf-check{font-size:11.5px;color:#444;margin:4px 0;}
+  .wf-check:before{content:"\2713  ";color:#1f8a4c;font-weight:900;}
+  .wf-checklist{columns:2;column-gap:24px;}
+  @media(max-width:700px){.wf-checklist{columns:1;}}
+
+  details.wf-acc{border:1px solid #bbb;margin-bottom:8px;background:#fafafa;border-radius:2px;}
+  details.wf-acc summary{padding:10px 14px;font-weight:700;font-size:12.5px;cursor:pointer;background:#e9e9e9;list-style:none;display:flex;justify-content:space-between;}
+  details.wf-acc summary::-webkit-details-marker{display:none;}
+  details.wf-acc summary:before{content:"▸  ";color:#555;}
+  details.wf-acc[open] summary:before{content:"▾  ";}
+  details.wf-acc .body{padding:11px 16px;font-size:11.5px;color:#555;}
+  details.wf-acc .body b{color:#333;}
+
+  .wf-split{display:grid;grid-template-columns:1.3fr 1fr;gap:16px;margin-top:6px;}
+  @media(max-width:800px){.wf-split{grid-template-columns:1fr;}}
+
+  .wf-form{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px;}
+  .wf-field{border:1.3px solid #aaa;background:#fff;border-radius:2px;padding:9px 10px;font-size:11px;color:#888;}
+  .wf-field.full{grid-column:1/-1;}
+  .wf-field.area{height:56px;align-content:start;}
+
+  .wf-metrics{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:8px;}
+  @media(max-width:900px){.wf-metrics{grid-template-columns:repeat(2,1fr);}}
+  .wf-metric{border:1px solid #bbb;background:#fafafa;text-align:center;padding:14px 6px;border-radius:2px;}
+  .wf-metric .num{font-size:22px;font-weight:900;color:#222;}
+  .wf-metric .lbl{font-size:10px;color:#666;margin-top:2px;}
+
+  .wf-nav-mock{display:flex;justify-content:space-between;align-items:center;border:1.5px solid #999;padding:11px 16px;background:#fff;font-size:11px;font-weight:700;margin-bottom:16px;border-radius:2px;flex-wrap:wrap;gap:8px;}
+  .wf-nav-mock .logo{font-weight:900;letter-spacing:.5px;}
+  .wf-nav-mock .links{display:flex;gap:13px;color:#555;font-weight:600;flex-wrap:wrap;}
+
+  .wf-footer-mock{border:1.5px solid #999;padding:18px;background:#f7f7f7;font-size:11.5px;border-radius:3px;}
+  .wf-footer-mock .cols{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr 1fr;gap:16px;}
+  @media(max-width:900px){.wf-footer-mock .cols{grid-template-columns:repeat(2,1fr);}}
+  .wf-footer-mock h5{font-size:11px;text-transform:uppercase;letter-spacing:.4px;margin:0 0 8px;color:#333;}
+  .wf-footer-mock ul{margin:0;padding-left:14px;color:#666;}
+  .wf-footer-mock ul li{margin-bottom:4px;}
+
+  .wf-quote{font-size:16px;font-style:italic;font-weight:600;color:#333;border-left:4px solid #222;padding-left:14px;margin:8px 0;}
+
+  .tree{font-family:Consolas,monospace;font-size:12px;background:#fafafa;border:1px solid #bbb;padding:14px 16px;border-radius:2px;line-height:1.7;white-space:pre;overflow-x:auto;}
+
+  .sitemap-list{counter-reset:pg;}
+  .sitemap-item{border:1px solid #bbb;background:#fafafa;padding:10px 14px;margin-bottom:8px;border-radius:2px;display:flex;gap:12px;align-items:flex-start;cursor:pointer;}
+  .sitemap-item:hover{background:#eee;}
+  .sitemap-item .n{font-weight:900;font-size:16px;color:#999;width:26px;}
+  .sitemap-item .txt b{font-size:13px;}
+  .sitemap-item .txt div{font-size:11.5px;color:#666;margin-top:2px;}
+
+  .legend{display:flex;gap:18px;flex-wrap:wrap;font-size:11px;color:#555;margin-top:10px;}
+  .legend span{display:flex;align-items:center;gap:6px;}
+  .legend .sw{width:16px;height:16px;border-radius:2px;display:inline-block;}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div>
+    <div class="t1">KAIZEN INFINITIES — WEBSITE WIREFRAME</div>
+    <div class="t2">Low-fidelity structural wireframe · for internal design/dev handoff · not final visual design</div>
+  </div>
+  <div class="meta">Prepared from "New Brand Positioning &amp; Website Content" brief<br>12 pages · Rev 1</div>
+</div>
+
+<div class="app">
+  <div class="sidebar" id="sidebar"></div>
+  <div class="main" id="main"></div>
+</div>
+
+<script>
+const PAGES = [];
+
+/* ---------- 0. OVERVIEW ---------- */
+PAGES.push({id:'overview', nav:'Overview / Sitemap', title:'Site Overview & Sitemap',
+  kicker:'START HERE', sub:'How the 12 pages fit together, and what each one is for.',
+  sections:[
+    {kind:'sitemap', tag:'SITE STRUCTURE', heading:'12-Page Website Structure', items:[
+      ['Home','Brand story, ecosystem overview, trust signals, CyberNex intro — the "why Kaizen" elevator pitch.'],
+      ['About Kaizen Infinities','Company story, vision/mission, values, snapshot, business ecosystem diagram.'],
+      ['Solutions & Services','Full catalogue of core solutions: ERP, Web, Mobile, AI, Cloud, Infrastructure, CyberNex.'],
+      ['Industries We Empower','Vertical-specific solutions for 11 industries + solution matrix.'],
+      ['Why Kaizen Infinities','Differentiators, six pillars of excellence, engagement approach, comparison table.'],
+      ['KINETIC™ Delivery Framework','Proprietary 10-phase delivery methodology, deep process detail.'],
+      ['Technology Excellence','Tech stack, architecture, engineering standards — for technical buyers.'],
+      ['Solutions in Action','Use-case style walkthroughs per industry, before/after, success metrics.'],
+      ['Innovation, Research & Excellence','K-Labs, talent development, CyberNex R&D, future roadmap.'],
+      ['Client Engagement Model','Step-by-step client journey, governance, communication cadence.'],
+      ['Insights & Resources','Blog/content hub, downloadables, webinars, newsletter — lead-gen engine.'],
+      ['Contact Us','Contact details, enquiry form, global footer.']
+    ], note:'Use the left sidebar to jump between pages. Every page below follows the same wireframe convention: grey boxes = layout sections, dashed amber boxes = notes carried over from the client\'s creative-direction callouts in the source brief.'},
+    {kind:'legend'}
+  ]});
+
+/* ---------- helper for long-list cards ---------- */
+function crd(title, items, more){ return {title, items, more}; }
+
+/* ================= PAGE 1 — HOME ================= */
+PAGES.push({id:'home', nav:'1. Home', title:'Home',
+  sections:[
+    {kind:'nav', tag:'GLOBAL HEADER (all pages)', links:['Home','About','Solutions','Industries','Why Kaizen','KINETIC™','Technology','CyberNex','Resources','Contact'], cta:'Schedule a Consultation'},
+    {kind:'hero', tag:'HERO SECTION', heading:'Engineering Intelligent Digital Enterprises',
+      sub:'Kaizen Infinities Private Limited is a technology-driven software engineering company delivering enterprise applications, ERP solutions, AI-powered automation, cloud infrastructure, IT consulting, and cybersecurity excellence through CyberNex — our dedicated Cyber Security Experience Center.',
+      buttons:['Schedule a Consultation','Explore Our Solutions'],
+      img:'Premium hero illustration — flow: Digital Enterprise → Cloud → ERP → AI → Cyber Security → Business Growth'},
+    {kind:'pills', tag:'TRUST BAR', heading:'Trusted Technology Partner For', items:['Educational Institutions','Corporate Enterprises','MSMEs','Government Organizations','Manufacturing','Healthcare','Startups','Financial Services']},
+    {kind:'text', tag:'SECTION 2 — WHO WE ARE', heading:'Technology Built Around Continuous Improvement',
+      body:['Kaizen is a Japanese philosophy of continuous improvement through small, consistent, meaningful changes. At Kaizen Infinities, we transformed this philosophy into a modern technology company — enterprise software, ERP, cloud-native applications, intelligent automation, AI, and cybersecurity — helping organizations become smarter, faster, and more secure.','"We don\'t sell software. We engineer business transformation."'],
+      flowLabel:'Our Philosophy (large infographic)', flow:['Vision','Strategy','Technology','Implementation','Continuous Improvement','Business Success']},
+    {kind:'cards', tag:'SECTION 3 — OUR BUSINESS ECOSYSTEM', heading:'Our Business Ecosystem', cols:3, cards:[
+      crd('Digital Engineering',['ERP, CRM, HRMS','Accounting, Inventory, Payroll'],'Education/Hospital/Manufacturing ERP, Custom Enterprise Software'),
+      crd('Web Engineering',['Modern, responsive, scalable web apps']),
+      crd('Mobile Engineering',['Android, iOS, Flutter'],'Cross-platform enterprise applications'),
+      crd('Artificial Intelligence',['Machine Learning, BI, Automation','Chatbots, Predictive Analytics'],'Document Processing, AI Agents'),
+      crd('Cloud Engineering',['AWS, Azure, Google Cloud','Migration, Virtualization'],'Containerization, DevOps'),
+      crd('Infrastructure Solutions',['Networking, Servers, Firewalls'],'Enterprise WiFi, Storage, Disaster Recovery')
+    ], note:'Highlight "Cyber Security Excellence — Powered by CyberNex — South India\'s Next Generation Cyber Security Experience Center" as a 7th, visually distinct featured card with a "Learn More →" CTA.'},
+    {kind:'cards', tag:'SECTION 4 — WHY ORGANIZATIONS CHOOSE KAIZEN', heading:'Why Organizations Choose Kaizen', intro:'Focus on outcomes, not features.', cols:3, cards:[
+      crd('Business First',['We understand your business before writing a single line of code.']),
+      crd('Enterprise Architecture',['Solutions designed to scale from startups to large organizations.']),
+      crd('Security by Design',['Cybersecurity integrated into every solution.']),
+      crd('Future Ready',['Cloud-native and AI-enabled architecture.']),
+      crd('End-to-End Delivery',['Consulting · Design · Development','Deployment · Support · Training']),
+      crd('Continuous Improvement',['True to our Kaizen philosophy, every solution evolves with your business.'])
+    ]},
+    {kind:'flow', tag:'SECTION 5 — OUR DEVELOPMENT FRAMEWORK', heading:'Our Development Framework', intro:'Beautiful horizontal roadmap', steps:['Discovery','Business Analysis','Architecture','UI/UX','Development','Testing','Deployment','Support','Continuous Innovation']},
+    {kind:'icons', tag:'SECTION 6 — INDUSTRIES WE TRANSFORM', heading:'Industries We Transform', items:['Education','Healthcare','Manufacturing','Retail','Banking','Government','NGOs','Hospitality','Construction','Transportation','Agriculture','Startups']},
+    {kind:'dark', tag:'SECTION 7 — INTRODUCING CYBERNEX', heading:'South India\'s Next Generation Cyber Security Experience Center',
+      body:'CyberNex is the dedicated cybersecurity division of Kaizen Infinities, bridging classroom learning and enterprise security operations — a fully equipped, enterprise-grade cyber range for ethical hacking, SOC, digital forensics, cloud security, and incident response.',
+      cta:'Explore CyberNex →', note:'Large full-width section. Dark background, blue neon graphics.'},
+    {kind:'footerRef'}
+  ]});
+
+/* ================= PAGE 2 — ABOUT ================= */
+PAGES.push({id:'about', nav:'2. About Kaizen Infinities', title:'About Kaizen Infinities', sections:[
+  {kind:'hero', tag:'HERO BANNER', heading:'Transforming Businesses Through Innovation, Engineering & Continuous Improvement',
+    sub:'Engineering technology that empowers organizations to innovate, automate, and grow — today and for the future.',
+    img:'A futuristic digital enterprise city connected through AI, Cloud, ERP, Mobile Apps, Cyber Security, IoT, and Analytics.'},
+  {kind:'text', tag:'WHO WE ARE', heading:'Engineering the Future of Business', body:[
+    'At Kaizen Infinities, technology should do more than solve today\'s challenges — it should prepare organizations for tomorrow\'s opportunities. Founded on the Japanese philosophy of Kaizen (Continuous Improvement).',
+    'We specialize in enterprise-grade software, digital transformation, cloud, infrastructure engineering, AI-powered automation, cybersecurity, and professional technology training. Kaizen Infinities becomes your long-term technology partner — not just another software vendor.'
+  ]},
+  {kind:'text', tag:'OUR STORY', heading:'From Continuous Improvement to Continuous Innovation', body:[
+    'The word Kaizen has inspired successful organizations worldwide. At Kaizen Infinities, we transformed this philosophy into a technology company with a clear mission: to engineer digital solutions that continuously evolve with our clients\' businesses.'
+  ]},
+  {kind:'cards', tag:'CODE · CRAFT · CONTINUUM', heading:'Code · Craft · Continuum', cols:3, cards:[
+    crd('Code',['Clean, scalable, maintainable engineering.']),
+    crd('Craft',['Exceptional architecture, UX, and quality.']),
+    crd('Continuum',['Continuous innovation, support, optimization, long-term partnership.'])
+  ]},
+  {kind:'text', tag:'OUR PURPOSE', heading:'Why We Exist', body:['Technology should simplify complexity — not create it. Our purpose is to bridge fragmented systems, manual workflows, cybersecurity threats, and evolving expectations by creating unified digital ecosystems. "We don\'t simply deliver software. We transform the way organizations operate."']},
+  {kind:'text', tag:'OUR VISION', heading:'Engineering Smarter Organizations for a Connected Future', body:['To become one of India\'s most trusted technology partners, empowering organizations through intelligent software, secure digital infrastructure, and continuous innovation.']},
+  {kind:'list', tag:'OUR MISSION', heading:'We Are Committed To', items:['Engineering innovative software that solves real-world business challenges','Accelerating digital transformation through automation, cloud, and AI','Building secure, scalable, and reliable technology ecosystems','Delivering enterprise-grade cybersecurity education through CyberNex','Enabling organizations to embrace innovation with confidence','Creating lasting partnerships built on trust, quality, and continuous improvement']},
+  {kind:'cards', tag:'OUR CORE VALUES', heading:'The Principles That Guide Every Solution We Build', cols:4, cards:[
+    crd('Continuous Improvement',['Every solution can always become better.']),
+    crd('Customer Success',['Our success is measured by our clients\' success.']),
+    crd('Innovation',['Constantly exploring emerging technologies.']),
+    crd('Integrity',['Honesty, transparency, accountability.']),
+    crd('Quality Engineering',['Never compromise on architecture or performance.']),
+    crd('Security First',['Cybersecurity integrated, not added later.']),
+    crd('Collaboration',['We work as an extension of our clients\' teams.'])
+  ]},
+  {kind:'table', tag:'COMPANY SNAPSHOT', heading:'Company Snapshot', headers:['Field','Detail'], rows:[
+    ['Company Name','Kaizen Infinities Private Limited'],
+    ['Headquarters','Madurai, Tamil Nadu, India'],
+    ['Industry','Information Technology & Digital Transformation'],
+    ['Core Expertise','Enterprise Software, ERP, Cloud, AI, Infrastructure, Cybersecurity'],
+    ['Flagship Cyber Division','CyberNex – Cyber Security Experience Center'],
+    ['Business Model','B2B, B2G, Educational Institutions, Enterprises'],
+    ['Delivery Model','Consulting · Design · Development · Deployment · Support']
+  ]},
+  {kind:'split', tag:'OUR BUSINESS ECOSYSTEM', heading:'Our Business Ecosystem', img:'Central circle "Kaizen Infinities" connected to: AI · Infrastructure · Software Engineering · Cloud Engineering · CyberNex · Digital Transformation · Web & Mobile Applications', text:'Six surrounding service domains radiate from the Kaizen Infinities core, showing the integrated ecosystem visually rather than as a text list.'},
+  {kind:'list', tag:'WHAT MAKES US DIFFERENT', heading:'We Build Technology Around Business Outcomes', items:['Business-first thinking','Technology excellence','Long-term partnership']},
+  {kind:'text', tag:'OUR PROMISE', heading:'Beyond Technology. Building Trust.', body:['When organizations partner with Kaizen Infinities, they gain a dedicated innovation partner committed to their long-term success.']},
+  {kind:'note-standalone', heading:'Creative Direction for the Designer', body:'This page should feel like the opening chapter of a premium corporate annual report. Full-width enterprise tech imagery with subtle blue gradients · horizontal timeline of Kaizen philosophy evolving into digital transformation · icons for each core value · circular "Business Ecosystem" infographic · minimalist "Company Snapshot" card · real team/collaboration imagery, not generic stock photos.'}
+]});
+
+/* ================= PAGE 3 — SOLUTIONS & SERVICES ================= */
+PAGES.push({id:'solutions', nav:'3. Solutions & Services', title:'Solutions & Services', sections:[
+  {kind:'hero', tag:'HERO BANNER', heading:'Technology That Solves Business Problems',
+    sub:'We design, engineer, and support intelligent digital solutions that streamline operations, automate workflows, enhance customer experiences, and accelerate business growth.'},
+  {kind:'text', tag:'OUR DIGITAL TRANSFORMATION ECOSYSTEM', heading:'One Technology Partner. Unlimited Possibilities.', body:['Rather than engaging multiple vendors for software, infrastructure, cloud, cybersecurity, and digital transformation, organizations rely on Kaizen Infinities as a single trusted technology partner.']},
+  {kind:'accordion', tag:'OUR CORE SOLUTIONS', heading:'Our Core Solutions (expandable capability cards)', items:[
+    {title:'Enterprise Software Engineering', body:'Expertise: Enterprise Business Apps, ERP, CRM, HRMS, Finance, Inventory, Supply Chain, School/College ERP, Healthcare Mgmt, Manufacturing, Franchise Mgmt, Portals (Customer/Vendor/Employee). Benefits: Productivity, Centralized Data, Real-Time Analytics, Scalable Operations. Graphic: Business Challenge → Business Analysis → Software Engineering → Automation → Business Growth.'},
+    {title:'ERP & Business Automation', body:'Modules: Finance, Accounts, Payroll, HR, Inventory, Sales, Procurement, Production, CRM, Assets, Helpdesk, Projects, Attendance, Visitor Mgmt, Approvals, Reporting, BI. Ideal for: Education, Manufacturing, Retail, Healthcare, Construction, Distribution, NGOs, Government, MSMEs, Corporate. Benefits: eliminate duplicate data, faster approvals, paperless ops, executive dashboards.'},
+    {title:'Web Engineering', body:'Solutions: Corporate Websites, Educational/Government Portals, E-Commerce, Booking Platforms, LMS, Membership/Customer/Franchise Portals. Technologies: Next.js, React, Node.js, Python, PHP, Laravel, Django, FastAPI, MySQL, PostgreSQL, MongoDB, Cloud Hosting.'},
+    {title:'Mobile Application Development', body:'Builds: Android, iOS, Flutter, Hybrid, Enterprise, Sales Force, Field Service, Attendance, Learning, Healthcare, E-Commerce apps. Features: GPS, Offline Sync, Push Notifications, Payment Gateway, Biometric Login, AI Integration, Cloud Sync.'},
+    {title:'Artificial Intelligence & Intelligent Automation', body:'Solutions: AI Chatbots, Virtual Assistants, Document Processing/OCR, ML, BI, Predictive Analytics, Recommendation Engines, Workflow Automation, AI Agents, Knowledge Assistants, Voice Automation. Industries: Education, Healthcare, Manufacturing, Finance, Retail, Government, Hospitality.'},
+    {title:'Cloud Engineering', body:'Services: Cloud Migration, Infrastructure Design, Virtualization, Backup, DR, Containerization, DevOps, Monitoring, Cloud Security. Platforms: Azure, AWS, Google Cloud, VMware, Proxmox, Docker, Kubernetes, Microsoft 365.'},
+    {title:'Infrastructure & Networking', body:'Solutions: Enterprise Networking, Structured Cabling, Server Deployment, Wireless, Firewalls, VPN, NAS Storage, Data Center Setup. Vendor Expertise: Cisco, Fortinet, Sophos, MikroTik, Dell, HPE, Lenovo, VMware, Microsoft, Ubiquiti.'},
+    {title:'Cyber Security Excellence — Powered by CyberNex', body:'Services: Cyber Security Awareness, Vulnerability Assessment, Penetration Testing, SOC Exposure, Digital Forensics, Incident Response Readiness, Cloud Security, Corporate Training, Security Consulting. CTA: Explore CyberNex →'}
+  ]},
+  {kind:'table', tag:'WHY OUR SOLUTIONS ARE DIFFERENT', heading:'Built Around Outcomes, Not Just Deliverables', headers:['Traditional IT Vendor','Kaizen Infinities'], rows:[
+    ['Sells software','Solves business challenges'],['Generic products','Customized solutions'],['Project-based engagement','Long-term technology partnership'],['Limited support','Continuous improvement & optimization'],['Technology-first','Business-first consulting'],['Isolated systems','Connected digital ecosystem'],['Reactive maintenance','Proactive innovation']
+  ]},
+  {kind:'flow', tag:'OUR DELIVERY MODEL', heading:'A Proven Framework for Success', steps:['Discover','Consult','Analyze','Design','Develop','Test','Deploy','Train','Support','Optimize','Innovate']},
+  {kind:'ctaBlock', tag:'CALL TO ACTION', heading:'Ready to Accelerate Your Digital Transformation?', primary:'Schedule a Free Consultation', secondary:'Request a Solution Assessment'},
+  {kind:'note-standalone', heading:'Designer\'s Vision', body:'Each solution presented as a distinct "capability card" with modern illustrations, icons, and concise business outcomes — avoid technical jargon. Include subtle animations, hover effects, and process graphics to reinforce Kaizen\'s premium, enterprise-focused identity.'}
+]});
+
+/* ================= PAGE 4 — INDUSTRIES ================= */
+PAGES.push({id:'industries', nav:'4. Industries We Empower', title:'Industries We Empower', sections:[
+  {kind:'hero', tag:'HERO BANNER', heading:'Every Industry is Different. Every Solution Should Be Too.', sub:'At Kaizen Infinities, we engineer tailored technology solutions that solve industry-specific problems while enabling organizations to innovate, automate, and scale with confidence.'},
+  {kind:'cards', tag:'INDUSTRIES WE SERVE', heading:'Technology That Understands Your Business', cols:3, cards:[
+    crd('Education & Academic Institutions',['School/College ERP, SIS, LMS','Online Exams, Fee Mgmt, Hostel'],'Outcomes: Paperless Campus, Faster Admissions'),
+    crd('Manufacturing & Industrial',['Production Planning, Inventory','Quality, Barcode/QR, IoT'],'Benefit: Predictive Maintenance, Executive Dashboards'),
+    crd('Healthcare & Hospitals',['HIS, Clinic Mgmt, EMR','Pharmacy, Lab, Telemedicine'],'Outcome: Faster Patient Care, Compliance'),
+    crd('Retail & E-Commerce',['POS, Inventory, CRM','Loyalty, Warehouse, Mobile Commerce'],'Impact: Higher Sales, Smarter Marketing'),
+    crd('Corporate Enterprises',['Enterprise ERP, HRMS, Payroll','Finance, BI, Executive Dashboards']),
+    crd('Government & Public Sector',['Citizen Portals, Document Mgmt','Workflow Automation, Compliance']),
+    crd('Startups & Entrepreneurs',['MVP Development, Product Consulting','UI/UX, Cloud Deployment, AI Integration']),
+    crd('NGOs & Non-Profits',['Donation Mgmt, Volunteer Portals','Grant Reporting, Impact Analytics']),
+    crd('Agriculture & AgriTech',['Farm Mgmt, Crop Monitoring','IoT, GIS/GPS, Agricultural ERP']),
+    crd('Logistics & Transportation',['Fleet Mgmt, GPS Tracking','Route Optimization, Fuel Monitoring']),
+    crd('Financial Services',['Customer Portals, Loan Mgmt','Risk Analytics, Approval Workflows'])
+  ]},
+  {kind:'list', tag:'WHY INDUSTRIES CHOOSE KAIZEN', heading:'We Understand Business Before Technology', items:['Business Processes','Operational Challenges','Industry Regulations','Customer Expectations','Growth Plans','Technology Readiness']},
+  {kind:'table', tag:'INDUSTRY SOLUTION MATRIX', heading:'Industry Solution Matrix', headers:['Industry','Software','ERP','Mobile','AI','Cloud','Infra','Cyber Sec'], rows:[
+    ['Education','✓','✓','✓','✓','✓','✓','✓'],['Healthcare','✓','✓','✓','✓','✓','✓','✓'],['Manufacturing','✓','✓','✓','✓','✓','✓','✓'],['Retail','✓','✓','✓','✓','✓','✓','✓'],['Government','✓','✓','✓','✓','✓','✓','✓'],['Agriculture','✓','✓','✓','✓','✓','✓','✓'],['Corporate','✓','✓','✓','✓','✓','✓','✓'],['Startups','✓','✓','✓','✓','✓','✓','✓']
+  ]},
+  {kind:'text', tag:'SUCCESS BEGINS WITH UNDERSTANDING', heading:'Success Begins with Understanding', body:['Every successful digital transformation starts with listening. Before recommending technology, we invest time in understanding your organization, workflows, challenges, and future vision.']},
+  {kind:'ctaBlock', tag:'CALL TO ACTION', heading:'Let\'s Build Your Industry\'s Next Success Story', primary:'Discuss Your Industry Requirements', secondary:'Book a Digital Transformation Assessment'},
+  {kind:'note-standalone', heading:'Designer\'s Vision', body:'Interactive "industry showcase": hero with animated world of connected industries · industry cards with custom icons + hover animation · visual Industry Solution Matrix · sector workflow infographics (Education: Admission→Academics→Examination→Placement; Manufacturing: Procurement→Production→Quality→Dispatch) · real-world imagery · space reserved for future testimonials/case studies.'}
+]});
+
+/* ================= PAGE 5 — WHY KAIZEN ================= */
+PAGES.push({id:'why', nav:'5. Why Kaizen Infinities', title:'Why Kaizen Infinities', sections:[
+  {kind:'hero', tag:'HERO BANNER', heading:'More Than a Technology Vendor. Your Long-Term Digital Transformation Partner.', sub:'Technology is easy to purchase. The right technology partner is much harder to find.'},
+  {kind:'text', tag:'WHY ORGANIZATIONS TRUST US', heading:'We Build Partnerships, Not Just Projects', body:['Instead of selling predefined software packages, we begin by understanding your vision, analyzing your business processes, and designing solutions that align with your long-term goals.']},
+  {kind:'text', tag:'OUR DIFFERENCE', heading:'Business First. Technology Second.', body:['Before we write a single line of code, our consultants immerse themselves in your organization\'s workflows, identify bottlenecks, and uncover automation opportunities.']},
+  {kind:'accordion', tag:'OUR SIX PILLARS OF EXCELLENCE', heading:'Our Six Pillars of Excellence', items:[
+    {title:'1. Strategic Business Consulting', body:'Analyze: Existing Workflows, Operational Challenges, Process Bottlenecks, Growth Opportunities, Technology Readiness, Future Scalability. Outcome: Solutions aligned with business strategy.'},
+    {title:'2. Engineering Excellence', body:'Standards: Modular Architecture, Secure Development, Clean Code, API-First, Cloud-Ready, High Availability, Performance Optimization. Outcome: Reliable systems that grow with your business.'},
+    {title:'3. Innovation Through Emerging Technologies', body:'Areas: AI, ML, Cloud Computing, IoT, BI, RPA, Data Analytics, Enterprise Mobility. Outcome: Future-ready organizations.'},
+    {title:'4. Security by Design', body:'Focus: Secure Coding, Data Protection, RBAC, MFA, Backup & DR, Compliance, Infrastructure Hardening, Security Audits. Powered by CyberNex. Outcome: Resilient digital ecosystems.'},
+    {title:'5. Continuous Improvement', body:'Services: Performance Monitoring, Feature Enhancements, System Optimization, Security Updates, User Training, Business Reviews, Technology Roadmaps. Outcome: Long-term business value.'},
+    {title:'6. Dedicated Client Partnership', body:'Teams work closely with stakeholders, maintaining transparency, accountability, continuous communication.'}
+  ]},
+  {kind:'flow', tag:'OUR APPROACH', heading:'Every Successful Project Begins With Understanding', steps:['Discover','Consult','Architect','Engineer','Validate','Deploy','Support']},
+  {kind:'text', tag:'WHY OUR CLIENTS STAY WITH US', heading:'Beyond Project Delivery', body:['Many technology vendors disappear once a project goes live. Kaizen Infinities believes deployment is only the beginning.']},
+  {kind:'table', tag:'COMPARISON', heading:'Traditional IT Vendor vs Kaizen Infinities', headers:['Traditional Vendor','Kaizen Infinities'], rows:[
+    ['Delivers software','Delivers business transformation'],['One-time engagement','Long-term strategic partnership'],['Generic solutions','Customized enterprise solutions'],['Reactive support','Continuous innovation & optimization'],['Technology-focused','Business outcome-focused'],['Separate vendors for different needs','One integrated technology partner'],['Limited scalability','Future-ready architecture'],['Security considered later','Security by design']
+  ]},
+  {kind:'list', tag:'OUR COMMITMENT', heading:'What You Can Expect From Every Engagement', items:['Transparent Communication','Professional Project Management','Scalable Solution Architecture','Timely Delivery','Comprehensive Documentation','User Training & Knowledge Transfer','Long-Term Support','Continuous Innovation']},
+  {kind:'flow', tag:'CLIENT ENGAGEMENT MODEL', heading:'Client Engagement Model', vertical:true, steps:['Discovery Workshop','Business Process Assessment','Technology Roadmap','Solution Proposal','UI/UX Design','Development','Quality Assurance','Deployment','Training','Go-Live Support','Continuous Improvement']},
+  {kind:'list', tag:'CUSTOMER SUCCESS PHILOSOPHY', heading:'Your Growth Defines Our Success', items:['Reduced operational costs','Increased productivity','Better customer experiences','Improved decision-making','Enhanced security','Sustainable digital growth']},
+  {kind:'ctaBlock', tag:'FINAL MESSAGE', heading:'Let\'s Engineer the Future Together', primary:'Book a Strategy Consultation', secondary:'Let\'s Discuss Your Digital Transformation Journey'},
+  {kind:'note-standalone', heading:'Designer\'s Note (Premium UI)', body:'This page should feel like the "trust-building" chapter. Large full-width hero with executives collaborating over digital dashboards · six premium Pillars of Excellence cards with subtle animation · timeline infographic for engagement model · side-by-side comparison cards · animated counters for success metrics (replace placeholders with real values) · concluding CTA with confident partnership imagery.'}
+]});
+
+/* ================= PAGE 6 — KINETIC ================= */
+PAGES.push({id:'kinetic', nav:'6. KINETIC™ Framework', title:'The KINETIC™ Delivery Framework', sections:[
+  {kind:'hero', tag:'HERO BANNER', heading:'Great Software Doesn\'t Happen by Chance. It Happens by Process.', sub:'Kaizen Intelligent Engineering, Technology Integration & Continuous Innovation — our proprietary KINETIC™ Delivery Framework.'},
+  {kind:'text', tag:'WHAT IS KINETIC™', heading:'Kaizen Intelligent Engineering & Technology Integration Cycle', body:['KINETIC™ is our structured business transformation framework combining strategic consulting, technology engineering, cybersecurity, QA, and continuous innovation into a single lifecycle.']},
+  {kind:'accordion', tag:'THE 10-STEP KINETIC™ FRAMEWORK', heading:'The 10-Step KINETIC™ Framework (premium horizontal roadmap w/ animated milestones)', items:[
+    {title:'Phase 1 – Discover', body:'Activities: Stakeholder Workshops, Business Discovery, Process Observation, Requirement Gathering, Gap Analysis. Deliverables: BRD, Stakeholder Map, Current-State Analysis.'},
+    {title:'Phase 2 – Define', body:'Activities: Functional Analysis, Technical Feasibility, Risk Assessment, Solution Architecture Planning. Deliverables: Functional Spec, Solution Blueprint, Project Roadmap.'},
+    {title:'Phase 3 – Design', body:'Includes: User Research, Information Architecture, Wireframes, Interactive Prototypes, Design System. Deliverables: UI Mockups, Design Prototype, User Journey Maps.'},
+    {title:'Phase 4 – Engineer', body:'Standards: Modular Development, API-First, Cloud-Native, Secure Coding, Scalable DBs. Deliverables: Working Application, APIs, Database, Documentation.'},
+    {title:'Phase 5 – Validate', body:'Testing: Functional, Performance, Security, UAT, Regression, Compatibility. Deliverables: QA Reports, Test Cases, Security Checklist.'},
+    {title:'Phase 6 – Secure', body:'Practices: Secure Architecture Review, Vulnerability Assessment, RBAC, Encryption, Auth Strategy — CyberNex contributes. Deliverables: Security Assessment, Risk Report, Compliance Checklist.'},
+    {title:'Phase 7 – Deploy', body:'Activities: Production Deployment, Data Migration, User Config, Infra Setup, Performance Monitoring. Deliverables: Live Environment, Deployment Docs, Rollback Strategy.'},
+    {title:'Phase 8 – Enable', body:'Services: Admin & End-User Training, Manuals, Knowledge Base, Video Tutorials, Go-Live Support. Deliverables: Training Materials, User Docs, Adoption Plan.'},
+    {title:'Phase 9 – Optimize', body:'Continuous Services: Performance Monitoring, Feature Enhancements, Analytics Review, User Feedback. Deliverables: Enhancement Roadmap, Quarterly Reviews.'},
+    {title:'Phase 10 – Innovate', body:'Areas: AI, BI, Predictive Analytics, IoT, DevSecOps, RPA. Deliverables: Innovation Roadmap, Future Technology Strategy, Digital Maturity Assessment.'}
+  ]},
+  {kind:'flow', tag:'VISUAL FRAMEWORK', heading:'Full-Width Infographic (icons + arrows)', steps:['Discover','Define','Design','Engineer','Validate','Secure','Deploy','Enable','Optimize','Innovate']},
+  {kind:'pills', tag:'GOVERNANCE THROUGHOUT THE PROJECT', heading:'Governance (circular graphic surrounding the KINETIC™ cycle)', items:['Transparent Communication','Agile Collaboration','Risk Management','Quality Assurance','Continuous Improvement']},
+  {kind:'list', tag:'WHAT CLIENTS RECEIVE', heading:'What Clients Receive', cols:2, items:['Business Requirement Document (BRD)','Functional Requirement Specification (FRS)','Solution Architecture Document','UI/UX Prototypes','Development Milestones','Test Reports','Deployment Plan','User Manuals','Training Sessions','Support Documentation']},
+  {kind:'list', tag:'WHY THE KINETIC™ FRAMEWORK MATTERS', heading:'Clients Invest in Confidence', items:['Strategically planned','Business-driven','Technically robust','Secure by design','Delivered transparently','Supported continuously','Ready for future innovation']},
+  {kind:'ctaBlock', tag:'CALL TO ACTION', heading:'Let\'s Build Your Next Success Story — Together', primary:'Start Your Digital Transformation Journey', secondary:'Request a Discovery Workshop'},
+  {kind:'note-standalone', heading:'Designer\'s Vision', body:'One of the most visually engaging pages: full-width animated KINETIC™ lifecycle · distinct icons/color-coding per phase · hover effects revealing activities & deliverables · downloadable "Our Delivery Framework" PDF · testimonial callouts tied to phases · interactive desktop roadmap / vertical mobile timeline.'}
+]});
+
+/* ================= PAGE 7 — TECHNOLOGY EXCELLENCE ================= */
+PAGES.push({id:'technology', nav:'7. Technology Excellence', title:'Technology Excellence', sections:[
+  {kind:'hero', tag:'HERO BANNER', heading:'Technology That Evolves With Your Business', sub:'We leverage world-class technologies, cloud-native architectures, enterprise security, and modern engineering practices to build scalable digital ecosystems.'},
+  {kind:'list', tag:'OUR TECHNOLOGY PHILOSOPHY', heading:'Choose the Right Technology, Not the Most Popular One', items:['Business Goals','User Experience','Scalability','Performance','Security','Maintainability','Budget','Future Expansion']},
+  {kind:'flow', tag:'ENTERPRISE ARCHITECTURE', heading:'Designed for Performance. Built for Scale.', vertical:true, steps:['Users','Web Portal / Mobile App / Admin Portal / Customer Portal','API Gateway','Business Logic','AI Services','Authentication','Cloud Services','Database Layer','Infrastructure','Backup & Disaster Recovery']},
+  {kind:'tagsCards', tag:'FRONTEND ENGINEERING', heading:'Beautiful Experiences. Powerful Interfaces.', tags:['React','Next.js','Angular','Vue.js','HTML5','CSS3','Tailwind CSS','Bootstrap','JavaScript','TypeScript'], caps:['Responsive Design','Progressive Web Apps','Accessibility','High Performance','SEO Optimization','Cross-Browser Compatibility']},
+  {kind:'tagsCards', tag:'BACKEND ENGINEERING', heading:'Reliable Systems Behind Every Successful Business', tags:['Python','FastAPI','Django','Laravel','Node.js','ASP.NET Core','Java Spring Boot','PHP'], caps:['REST APIs','Microservices','Authentication & Authorization','Business Rules Engine','Reporting Services','API Integrations']},
+  {kind:'tagsCards', tag:'DATABASE ENGINEERING', heading:'Data is Your Most Valuable Asset', tags:['MySQL','PostgreSQL','Microsoft SQL Server','MongoDB','Redis','Firebase'], caps:['Database Design','Performance Tuning','Replication','Backup Strategy','Disaster Recovery','Data Migration & Analytics']},
+  {kind:'tagsCards', tag:'MOBILE TECHNOLOGIES', heading:'Business Anytime. Anywhere.', tags:['Android','iOS','Flutter','React Native'], caps:['GPS','Biometric Login','Offline Sync','Cloud Sync','Push Notifications','Payment Gateway / QR / NFC']},
+  {kind:'tagsCards', tag:'CLOUD ENGINEERING', heading:'Flexible. Secure. Always Available.', tags:['Microsoft Azure','Amazon Web Services','Google Cloud Platform','VMware Cloud','Microsoft 365'], caps:['Cloud Migration','Virtual Machines','Serverless Computing','Backup & DR','Monitoring','Identity Management']},
+  {kind:'tagsCards', tag:'DEVOPS & AUTOMATION', heading:'Accelerating Software Delivery', tags:['Git','GitHub','GitLab','Docker','Kubernetes','Jenkins','Azure DevOps'], caps:['CI/CD Pipelines','Containerization','Infrastructure as Code','Monitoring','Automated Testing','Release Management']},
+  {kind:'list', tag:'CYBERSECURITY INTEGRATION', heading:'Security Built Into Every Layer (supported by CyberNex)', items:['Secure Coding','Encryption','Identity Management','Role-Based Access','Audit Logging','Penetration Testing','Vulnerability Assessment','Secure API Design','Backup Strategy','Compliance']},
+  {kind:'list', tag:'AI & INTELLIGENT AUTOMATION', heading:'Transforming Data into Decisions', items:['Generative AI','Machine Learning','Document Intelligence / OCR','Chatbots & Virtual Assistants','Recommendation Engines','Business Intelligence','Predictive Analytics','Workflow Automation','AI Agents']},
+  {kind:'list', tag:'INTERNET OF THINGS (IoT)', heading:'Connecting Physical Operations to Digital Intelligence', items:['Smart Attendance','Industrial Monitoring','Agriculture Automation','Energy Monitoring','Asset Tracking','Smart Campus','Fleet Tracking']},
+  {kind:'list', tag:'SYSTEM INTEGRATION', heading:'Bringing Every System Together', items:['Payment Gateways','SMS / WhatsApp / Email','Government APIs','ERP / CRM / Accounting','Biometric & IoT Devices','Cloud Platforms & Third-Party APIs']},
+  {kind:'list', tag:'BUSINESS INTELLIGENCE', heading:'Decisions Powered by Data', items:['Executive Dashboard','Sales / Finance / HR Dashboard','Student Analytics','Inventory Dashboard','Operational KPIs','Custom Reports']},
+  {kind:'checklist', tag:'OUR ENGINEERING STANDARDS', heading:'Enterprise Engineering Principles', items:['Clean Code Architecture','Modular Development','API-First Design','Secure Coding Standards','Automated Testing','Documentation','Version Control','Performance Optimization','Scalability','Continuous Improvement']},
+  {kind:'flow', tag:'TECHNOLOGY LIFECYCLE', heading:'Circular infographic — continuous improvement loop', steps:['Strategy','Architecture','Development','Testing','Deployment','Monitoring','Optimization','Innovation','Continuous Improvement']},
+  {kind:'ctaBlock', tag:'CALL TO ACTION', heading:'Future-Ready Technology Begins Here', primary:'Explore Our Technologies', secondary:'Talk to Our Engineering Team'},
+  {kind:'note-standalone', heading:'Designer\'s Vision', body:'Premium engineering aesthetic: animated architecture diagrams · interactive technology cards · layered enterprise architecture illustration · hover-enabled tech icons with brief descriptions · infographics for cloud/AI/DevOps/cybersecurity · a "Technology Radar" graphic for current & emerging tech.'}
+]});
+
+/* ================= PAGE 8 — SOLUTIONS IN ACTION ================= */
+PAGES.push({id:'action', nav:'8. Solutions in Action', title:'Solutions in Action', sections:[
+  {kind:'hero', tag:'HERO BANNER', heading:'Every Solution Begins with a Challenge. Every Success Begins with the Right Technology Partner.', sub:'At Kaizen Infinities, we engineer intelligent solutions that convert complexity into clarity, inefficiency into automation, and ideas into measurable business results.'},
+  {kind:'checklist', tag:'OUR IMPACT', heading:'Business Outcomes We Create', items:['Reduced Operational Costs','Faster Decision Making','Increased Employee Productivity','Centralized Business Operations','Improved Customer Experience','Real-Time Reporting & Analytics','Secure Digital Infrastructure','Scalable Enterprise Systems','Paperless Operations','Business Process Automation']},
+  {kind:'accordion', tag:'FEATURED SOLUTION AREAS', heading:'Featured Solution Areas', items:[
+    {title:'Education Digital Transformation', body:'Highlights: Admission Mgmt, SIS, Fee Mgmt, Attendance Automation, Examination Mgmt, LMS, Faculty/Parent Portals, Placement, Alumni. Before → After: Manual Admissions/Paper Records/Disconnected Depts/Delayed Reports → Centralized ERP/Digital Campus/Real-Time Dashboards/Better Student Experience.'},
+    {title:'Multi-Branch Franchise Management', body:'Features: Lead Mgmt, Franchise Ops, Enrollment, Finance & Fee Collection, Staff, Inventory, Performance Dashboard, Mobile Monitoring, Central Reporting. Benefits: Standardized Operations, Better Decisions, Branch Performance Tracking.'},
+    {title:'Manufacturing Operations Platform', body:'Digital Solutions: Production Planning, Inventory, Vendor Mgmt, Purchase Automation, Asset Maintenance, Quality Assurance, Dispatch Tracking. Results: Reduced Delays, Better Inventory Visibility, Increased Equipment Utilization.'},
+    {title:'Healthcare Management Platform', body:'Solutions: Patient Registration, Doctor Scheduling, EMR, Pharmacy, Laboratory, Billing, Insurance Integration, Telemedicine. Outcomes: Faster Patient Service, Secure Medical Records.'},
+    {title:'Enterprise HR & Workforce Management', body:'Modules: Employee Records, Attendance, Payroll, Leave Mgmt, Performance Appraisal, Recruitment, Training, Employee Self-Service, Mobile Attendance.'},
+    {title:'Agriculture & AgriTech Solutions', body:'Solutions: Farm ERP, Field Staff Tracking, Crop Monitoring, GPS-Based Visits, Farmer Portal, Warehouse Mgmt, Procurement Tracking, Mobile Applications.'}
+  ]},
+  {kind:'list', tag:'SMART DASHBOARDS', heading:'Every Decision Backed by Real-Time Data', items:['Executive Management','Finance','Sales','Operations','Human Resources','Education','Manufacturing','Inventory','Projects','Cyber Security','Business Intelligence']},
+  {kind:'list', tag:'BUSINESS PROCESS AUTOMATION', heading:'Eliminate Repetitive Work', items:['Document Approval','Employee Onboarding','Admissions','Fee Collection','Purchase Requests','Inventory Replenishment','Visitor Management','Notifications','Report Generation','Compliance Tracking']},
+  {kind:'list', tag:'AI-POWERED BUSINESS SOLUTIONS', heading:'Intelligence That Works for You', items:['AI Assistants','Smart Search','Document Intelligence / OCR','Predictive Analytics','Chatbots','Voice Interfaces','Workflow Recommendations','Data Insights']},
+  {kind:'flow', tag:'DIGITAL TRANSFORMATION JOURNEY', heading:'Horizontal transformation timeline', vertical:true, steps:['Current Challenges','Business Discovery','Technology Strategy','Solution Design','Software Development','Deployment','Training','Continuous Improvement','Business Growth']},
+  {kind:'metrics', tag:'CLIENT SUCCESS METRICS', heading:'Client Success Metrics (replace with real numbers when available)', items:['Enterprise Solutions Delivered','Industries Served','Users Empowered','Business Processes Automated','Mobile Apps Developed','ERP Modules Implemented','Cloud Deployments Completed','Training Hours Delivered','Cybersecurity Professionals Trained']},
+  {kind:'list', tag:'WHAT OUR CLIENTS GAIN', heading:'What Our Clients Gain', items:['A strategic technology advisor','Tailored digital solutions','Scalable enterprise architecture','Ongoing innovation and support','Enhanced operational efficiency','Strong cybersecurity integration','Long-term digital transformation roadmap']},
+  {kind:'ctaBlock', tag:'CALL TO ACTION', heading:'Let\'s Build Your Digital Success Story', primary:'Schedule a Business Discovery Session', secondary:'Explore Our Solutions'},
+  {kind:'note-standalone', heading:'Designer\'s Vision', body:'Premium digital showcase: "challenge → solution → outcome" cards per industry · animated counters for success metrics · infographic-style transformation journeys · reserved space for future client logos/testimonials · professional illustrations per sector · closing visual of connected organizations powered by Kaizen\'s ecosystem.'}
+]});
+
+/* ================= PAGE 9 — INNOVATION ================= */
+PAGES.push({id:'innovation', nav:'9. Innovation, Research & Excellence', title:'Innovation, Research & Excellence', sections:[
+  {kind:'hero', tag:'HERO BANNER', heading:'Innovation Never Stops. Neither Do We.', sub:'At Kaizen Infinities, innovation is not a department — it is a mindset.'},
+  {kind:'text', tag:'BUILDING THE FUTURE', heading:'From Software Development to Digital Innovation', body:['Our mission is not simply to follow AI, Cloud, Cybersecurity, Automation, IoT, and Data Intelligence trends but to help shape them — through continuous research, strategic partnerships, and practical implementation.']},
+  {kind:'cards', tag:'KAIZEN INNOVATION LABS (K-LABS)', heading:'Where Ideas Become Reality', intro:'Futuristic laboratory illustration with interconnected technology domains.', cols:3, cards:[
+    crd('Artificial Intelligence',['Generative AI, ML, Predictive Analytics','NLP, AI Agents']),
+    crd('Cloud Engineering',['Hybrid Cloud, Cloud Automation','IaC, Multi-Cloud, Cloud Security']),
+    crd('Cybersecurity Research',['Threat Intelligence, Attack Simulation','Digital Forensics, Zero Trust — Powered by CyberNex']),
+    crd('Internet of Things (IoT)',['Industrial IoT, Smart Campus','Smart Agriculture, Environmental Monitoring']),
+    crd('Automation & Robotics',['Workflow Automation, RPA','Industrial Automation, Autonomous Monitoring']),
+    crd('Future Technologies',['Digital Twin, Blockchain','AR/VR, Edge Computing, Quantum Readiness'])
+  ]},
+  {kind:'list', tag:'CONTINUOUS LEARNING CULTURE', heading:'Learning Never Ends', items:['Technical Certifications','Knowledge Sharing Sessions','Internal Workshops','Innovation Challenges','Research Projects','Technical Communities','Industry Conferences','Hackathons']},
+  {kind:'checklist', tag:'ENGINEERING STANDARDS', heading:'Excellence by Design', items:['Secure Software Development Lifecycle (SSDLC)','Agile Development Practices','DevSecOps Principles','API-First Architecture','Cloud-Native Engineering','Modular Development','Version Control','Continuous Integration','Continuous Deployment','Automated Testing']},
+  {kind:'split', tag:'KNOWLEDGE ECOSYSTEM', heading:'Building Expertise Across Multiple Domains', img:'Hub-and-spoke: AI · Cloud Computing · Cybersecurity · Software Engineering · Kaizen (hub) · Business Consulting · ERP Solutions · IoT · Data Analytics · Digital Transformation', text:'Central "Kaizen" hub radiating into the domains listed, shown as an interconnected diagram rather than a list.'},
+  {kind:'list', tag:'TALENT DEVELOPMENT', heading:'Growing the Next Generation of Technology Leaders', items:['Graduate Training Programs','Internships','Leadership Development','Certification Roadmaps','Cross-Functional Learning','Mentorship Programs','Innovation Projects','Research Contributions']},
+  {kind:'list', tag:'COLLABORATION & PARTNERSHIPS', heading:'Stronger Together', items:['Academic Institutions','Technology Vendors','Industry Associations','Research Organizations','Corporate Enterprises','Government Departments','Innovation Hubs','Startup Ecosystems']},
+  {kind:'list', tag:'QUALITY ASSURANCE', heading:'Excellence Is Measured, Not Assumed', items:['Functional Testing','Performance Testing','Usability Testing','Security Testing','Compatibility Testing','Regression Testing','Automation Testing','User Acceptance Testing']},
+  {kind:'dark', tag:'CYBERNEX — FLAGSHIP CENTER OF EXCELLENCE', heading:'CyberNex — Our Flagship Center of Excellence', body:'CyberNex combines hands-on learning, enterprise infrastructure, cyber ranges, SOC simulations, Digital Forensics, Cloud Security, and Red Team / Blue Team exercises in one integrated ecosystem.', cta:'Learn More About CyberNex →', note:'Add a striking cyber-lab image with this CTA.'},
+  {kind:'cards', tag:'OUR COMMITMENT TO EXCELLENCE', heading:'Four Enduring Principles', cols:4, cards:[
+    crd('Innovate',['Continuously explore emerging technologies.']),
+    crd('Engineer',['Build robust, scalable, enterprise-grade solutions.']),
+    crd('Secure',['Integrate cybersecurity into everything we create.']),
+    crd('Improve',['Apply the Kaizen philosophy of continuous improvement.'])
+  ]},
+  {kind:'text', tag:'THE FUTURE WE ARE BUILDING', heading:'The Future We Are Building', body:['We envision a future where businesses are more connected, data-driven, secure, and intelligent.']},
+  {kind:'ctaBlock', tag:'CALL TO ACTION', heading:'Innovation Begins with a Conversation', primary:'Explore Innovation with Kaizen', secondary:'Partner with Our Experts'},
+  {kind:'tree', tag:'STRATEGIC RECOMMENDATION', heading:'My Strategic Recommendation: Create the "Kaizen Digital Campus"', text:
+`KAIZEN INFINITIES PRIVATE LIMITED
+│
+├── Kaizen Digital Solutions   (Enterprise Software · ERP · AI · Cloud · Mobile)
+├── CyberNex                   (Cyber Security Center of Excellence)
+├── Kaizen Innovation Labs     (AI · IoT · Automation · Research)
+├── Kaizen Academy              (Corporate Upskilling · Technical Training · Certification)
+└── Kaizen Consulting           (Digital Strategy · Business Transformation · Tech Advisory)`,
+  note:'This architecture allows the company to grow organically over the next decade without rebranding — new services naturally fit under the Kaizen umbrella. Recommend surfacing this org structure as a visual site-navigation concept for future phases.'},
+  {kind:'note-standalone', heading:'Designer\'s Vision', body:'Should feel like stepping into the innovation center of a global technology company: full-width futuristic hero (AI, cloud, robotics, cybersecurity visuals) · interactive K-Labs cards with hover effects · animated hub-and-spoke ecosystem · learning/research timeline · photo gallery (team, hackathons, labs) · subtle motion graphics.'}
+]});
+
+/* ================= PAGE 10 — CLIENT ENGAGEMENT MODEL ================= */
+PAGES.push({id:'engagement', nav:'10. Client Engagement Model', title:'Client Engagement Model', sections:[
+  {kind:'hero', tag:'HERO BANNER', heading:'Every Successful Project Begins with a Meaningful Conversation', sub:'Our engagement model ensures every client experiences clarity, collaboration, transparency, and measurable progress throughout the project lifecycle.', img:'Roadmap: Client Vision → Business Analysis → Design → Development → Go-Live → Continuous Innovation'},
+  {kind:'accordion', tag:'OUR CLIENT JOURNEY', heading:'Your Journey with Kaizen', items:[
+    {title:'Step 1 — Discovery Consultation', body:'Understand business objectives, operational challenges, existing software landscape, growth plans, user expectations, technology readiness. Deliverable: Initial Discovery Report.'},
+    {title:'Step 2 — Business Process Assessment', body:'Map Current Process (As-Is), Future Process (To-Be), Automation Opportunities, Integration Requirements, Risk Areas. Deliverable: Business Process Analysis.'},
+    {title:'Step 3 — Digital Transformation Roadmap', body:'Defines Scope, Priorities, Timeline, Budget, Milestones, Technology Stack, Risk Mitigation, Future Expansion. Deliverable: Solution Roadmap.'},
+    {title:'Step 4 — UI/UX & Solution Design', body:'Wireframes, Interactive Prototypes, Dashboard Concepts, Mobile Screens, User Journeys. Deliverable: UI/UX Approval.'},
+    {title:'Step 5 — Agile Development', body:'Sprint Reviews, Progress Reports, Demo Sessions, Change Request Management, Transparent Communication.'},
+    {title:'Step 6 — Quality Assurance', body:'Functional, Security, Performance Testing and UAT. Only approved modules move to production.'},
+    {title:'Step 7 — Deployment & Go-Live', body:'Data Migration, Environment Setup, User Configuration, Final Validation, Production Rollout.'},
+    {title:'Step 8 — Training & Adoption', body:'Administrator Training, End-User Workshops, User Manuals, Video Tutorials, Knowledge Base.'},
+    {title:'Step 9 — Support & Continuous Improvement', body:'Technical Assistance, Performance Monitoring, Feature Enhancements, Security Updates, Quarterly Reviews.'}
+  ]},
+  {kind:'flow', tag:'CLIENT ENGAGEMENT TIMELINE', heading:'Horizontal timeline with milestone icons', steps:['Discovery','Analysis','Roadmap','Design','Development','Testing','Deployment','Training','Support','Innovation']},
+  {kind:'cards', tag:'COMMUNICATION FRAMEWORK', heading:'Transparency is Built Into Every Engagement', cols:3, cards:[
+    crd('Weekly',['Sprint Updates','Status Reports','Progress Meetings']),
+    crd('Monthly',['Steering Committee Reviews','KPI Tracking','Risk Assessment']),
+    crd('Quarterly',['Technology Review','Enhancement Planning','Innovation Roadmap'])
+  ]},
+  {kind:'table', tag:'PROJECT GOVERNANCE', heading:'Every Project is Assigned a Structured Team', headers:['Role','Responsibility'], rows:[
+    ['Engagement Manager','Overall relationship & project governance'],['Business Analyst','Requirements & process mapping'],['Solution Architect','Technical architecture'],['UI/UX Designer','User experience & interface design'],['Development Team','Engineering & implementation'],['QA Engineer','Quality assurance'],['Project Manager','Planning, delivery & coordination'],['Support Team','Post-implementation support']
+  ]},
+  {kind:'list', tag:'OUR SERVICE COMMITMENT', heading:'Every Client Receives', items:['Clear Scope Definition','Transparent Pricing','Milestone-Based Delivery','Regular Progress Reviews','Complete Documentation','Knowledge Transfer','Long-Term Support']},
+  {kind:'list', tag:'CLIENT SUCCESS PRINCIPLES', heading:'Every Engagement Should Deliver', items:['Business Value','User Adoption','Operational Efficiency','Security','Scalability','Measurable ROI']},
+  {kind:'ctaBlock', tag:'CALL TO ACTION', heading:'Ready to Start Your Digital Transformation Journey?', primary:'Book a Discovery Workshop', secondary:'Request a Project Consultation'}
+]});
+
+/* ================= PAGE 11 — INSIGHTS & RESOURCES ================= */
+PAGES.push({id:'insights', nav:'11. Insights & Resources', title:'Insights & Resources', sections:[
+  {kind:'hero', tag:'HERO BANNER', heading:'Stay Ahead in a Rapidly Changing Digital World', sub:'Technology evolves every day. We help organizations stay informed through expert insights, practical guides, industry trends, and technology updates.'},
+  {kind:'cards', tag:'CONTENT CATEGORIES', heading:'Content Categories', cols:3, cards:[
+    crd('Digital Transformation',['Digital strategy','Business automation','Process optimization','Change management']),
+    crd('Enterprise Software',['ERP implementation','CRM best practices','HRMS','Workflow automation']),
+    crd('Artificial Intelligence',['Generative AI','AI Agents','Business AI','Automation']),
+    crd('Cloud Computing',['Cloud migration','Hybrid cloud','Cloud security','Infrastructure optimization']),
+    crd('Cybersecurity (Powered by CyberNex)',['Ethical Hacking','SOC','Digital Forensics','Threat Intelligence']),
+    crd('Emerging Technologies',['IoT, Smart Cities','Digital Twins, Blockchain','AR/VR, Edge Computing'])
+  ]},
+  {kind:'cards', tag:'FEATURED CONTENT', heading:'Featured Content (article cards)', cols:3, cards:[
+    crd('10 Signs Your Business Needs ERP',[]),
+    crd('AI in Education: The Future of Learning',[]),
+    crd('Cybersecurity Checklist for SMEs',[]),
+    crd('Building Secure Enterprise Applications',[]),
+    crd('Cloud Migration Without Downtime',[]),
+    crd('Digital Transformation Roadmap for Manufacturers',[])
+  ]},
+  {kind:'list', tag:'FREE RESOURCES', heading:'Downloadable Lead-Generation Assets', items:['ERP Readiness Checklist','Digital Transformation Guide','Cybersecurity Assessment Checklist','Business Process Mapping Template','Technology Budget Planner','IT Infrastructure Audit Checklist']},
+  {kind:'list', tag:'WEBINARS & EVENTS', heading:'Webinars & Events', items:['Corporate Workshops','Cybersecurity Awareness Programs','AI Bootcamps','Product Launches','Technical Webinars','Industry Roundtables']},
+  {kind:'ctaBlock', tag:'NEWSLETTER', heading:'Join the Kaizen Insights Community', primary:'Subscribe Now'}
+]});
+
+/* ================= PAGE 12 — CONTACT US ================= */
+PAGES.push({id:'contact', nav:'12. Contact Us', title:'Contact Us', sections:[
+  {kind:'hero', tag:'HERO BANNER', heading:'Your Digital Transformation Starts with a Conversation', sub:'Whether you\'re exploring ERP solutions, custom software, AI, cloud modernization, cybersecurity, or enterprise training, our team is ready to help.'},
+  {kind:'split', tag:'CONTACT INFORMATION', heading:'Corporate Office', img:'Map / office photo placeholder', text:'Kaizen Infinities Private Limited — (insert full address). Phone · Email · Website · Working Hours · LinkedIn · Facebook · Instagram · YouTube.'},
+  {kind:'checklist', tag:'BUSINESS ENQUIRIES', heading:'Looking For', items:['Enterprise Software','ERP','Mobile Apps','AI Solutions','Cloud Services','Infrastructure','Corporate Training','Cybersecurity (CyberNex)']},
+  {kind:'form', tag:'QUICK ENQUIRY FORM', heading:'Request a Free Consultation', fields:['Full Name','Organization','Designation','Email','Phone','Industry (dropdown)','Service Required (dropdown)','Preferred Contact Method'], textarea:'Project Description', submit:'Request a Free Consultation'},
+  {kind:'checklist', tag:'WHY CONTACT KAIZEN?', heading:'Why Contact Kaizen?', items:['Business-first consulting','Enterprise-grade engineering','Cybersecurity expertise','End-to-end project delivery','Long-term technology partnership']},
+  {kind:'globalFooter'},
+  {kind:'sitemap', tag:'STRATEGIC OBSERVATION', heading:'Current Website Structure (12 pages)', small:true, items:[
+    ['1. Home',''],['2. About Kaizen',''],['3. Solutions & Services',''],['4. Industries We Serve',''],['5. Why Kaizen',''],['6. KINETIC™ Delivery Framework',''],['7. Technology Excellence',''],['8. Solutions in Action',''],['9. Innovation, Research & Excellence',''],['10. Client Engagement Model',''],['11. Insights & Resources',''],['12. Contact Us','']
+  ], note:'At this point, Kaizen\'s website has evolved from a conventional IT company website into a complete digital transformation platform — positioning the company alongside established technology consulting firms rather than local software vendors.'}
+]});
+
+/* ============================================================
+   RENDERER
+   ============================================================ */
+function h(tag, cls, inner){ return `<div class="${cls}">${inner}</div>`; }
+
+function renderFlowSteps(steps, vertical){
+  let out = `<div class="wf-flow${vertical?' vertical':''}">`;
+  steps.forEach((s,i)=>{
+    out += `<div class="step">${s}</div>`;
+    if(i<steps.length-1) out += `<div class="arrow">${vertical?'↓':'→'}</div>`;
+  });
+  out += `</div>`;
+  return out;
+}
+
+function renderCard(c){
+  let items = (c.items||[]).map(i=>`<li>${i}</li>`).join('');
+  return `<div class="wf-card"><h4>${c.title}</h4>${c.d?`<p class="d">${c.d}</p>`:''}${items?`<ul>${items}</ul>`:''}${c.more?`<div class="more">+ ${c.more}</div>`:''}</div>`;
+}
+
+function renderSection(sec){
+  let inner = '';
+  const tagHtml = sec.tag ? `<div class="wf-tag">${sec.tag}</div>` : '';
+
+  if(sec.kind==='nav'){
+    inner = `<div class="wf-nav-mock"><div class="logo">KAIZEN INFINITIES</div><div class="links">${sec.links.map(l=>`<span>${l}</span>`).join('')}</div><div class="wf-btn" style="padding:6px 14px;">${sec.cta}</div></div>`;
+    return `<div class="wf-section">${tagHtml}${inner}</div>`;
+  }
+  if(sec.kind==='footerRef'){
+    return `<div class="wf-footer-mock"><b>GLOBAL FOOTER</b> — repeats on every page. See full footer wireframe on the <i>Contact Us</i> page (About · Quick Links · Services · Industries · Connect).</div>`;
+  }
+  if(sec.kind==='globalFooter'){
+    inner = `<div class="wf-footer-mock"><div class="cols">
+      <div><h5>About</h5>Engineering Digital Transformation Through Continuous Innovation.</div>
+      <div><h5>Quick Links</h5><ul><li>Home</li><li>About</li><li>Solutions</li><li>Industries</li><li>KINETIC™</li><li>Technologies</li><li>CyberNex</li><li>Careers</li><li>Resources</li><li>Contact</li></ul></div>
+      <div><h5>Services</h5><ul><li>ERP Solutions</li><li>Custom Software</li><li>Web Development</li><li>Mobile Apps</li><li>AI Solutions</li><li>Cloud Engineering</li><li>Infrastructure</li><li>Cybersecurity</li></ul></div>
+      <div><h5>Industries</h5><ul><li>Education</li><li>Manufacturing</li><li>Healthcare</li><li>Government</li><li>Retail</li><li>Agriculture</li><li>Corporate</li><li>Startups</li></ul></div>
+      <div><h5>Connect</h5><ul><li>Phone</li><li>Email</li><li>LinkedIn</li><li>YouTube</li><li>Instagram</li><li>Facebook</li></ul></div>
+    </div></div>`;
+    return `<div class="wf-section"><div class="wf-tag">WEBSITE FOOTER (GLOBAL — every page)</div>${inner}</div>`;
+  }
+
+  let cls = 'wf-section' + (sec.dark?' dark':'') + (sec.kind==='dark'?' dark':'');
+  inner += tagHtml;
+  if(sec.eyebrow) inner += `<div class="wf-eyebrow">${sec.eyebrow}</div>`;
+  if(sec.heading) inner += `<div class="wf-heading">${sec.heading}</div>`;
+  if(sec.sub) inner += `<div class="wf-subheading">${sec.sub}</div>`;
+  if(sec.intro) inner += `<div class="wf-subheading">${sec.intro}</div>`;
+
+  switch(sec.kind){
+    case 'hero':
+      if(sec.buttons) inner += `<div class="wf-btnrow">${sec.buttons.map((b,i)=>`<div class="wf-btn${i>0?' secondary':''}">${b}</div>`).join('')}</div>`;
+      if(sec.img) inner += `<div class="wf-img" style="height:150px;margin-top:12px;">${sec.img}</div>`;
+      break;
+    case 'dark':
+      inner += `<div class="wf-subheading">${sec.body}</div>`;
+      if(sec.cta) inner += `<div class="wf-btnrow"><div class="wf-btn">${sec.cta}</div></div>`;
+      if(sec.note) inner += `<div class="wf-note"><strong>Designer Note</strong>${sec.note}</div>`;
+      break;
+    case 'text':
+      (sec.body||[]).forEach(p=> inner += `<div class="wf-subheading">${p}</div>`);
+      if(sec.flow){
+        inner += `<div class="wf-eyebrow" style="margin-top:10px;">${sec.flowLabel||''}</div>`;
+        inner += renderFlowSteps(sec.flow,false);
+      }
+      break;
+    case 'pills':
+      inner += `<div class="wf-checklist" style="columns:1;"><div class="wf-flow">${sec.items.map(i=>`<div class="step" style="background:#eef7f0;border-color:#1f8a4c;color:#155c31;">✓ ${i}</div>`).join('')}</div></div>`;
+      break;
+    case 'cards':
+      inner += `<div class="wf-grid cols-${sec.cols||3}">${sec.cards.map(renderCard).join('')}</div>`;
+      break;
+    case 'tagsCards':
+      inner += `<div class="wf-flow">${sec.tags.map(t=>`<div class="step" style="background:#eef1f6;">${t}</div>`).join('')}</div>`;
+      inner += `<div class="wf-eyebrow" style="margin-top:12px;">Capabilities</div><div class="wf-checklist">${sec.caps.map(c=>`<div class="wf-check">${c}</div>`).join('')}</div>`;
+      break;
+    case 'flow':
+      inner += renderFlowSteps(sec.steps, sec.vertical);
+      break;
+    case 'icons':
+      inner += `<div class="wf-icons">${sec.items.map(i=>`<div class="wf-icon-item"><div class="wf-icon-circ">ICON</div>${i}</div>`).join('')}</div>`;
+      break;
+    case 'list':
+      inner += `<div class="wf-checklist" style="${sec.cols===2?'':'columns:2;'}">${sec.items.map(i=>`<div class="wf-check">${i}</div>`).join('')}</div>`;
+      break;
+    case 'checklist':
+      inner += `<div class="wf-checklist">${sec.items.map(i=>`<div class="wf-check">${i}</div>`).join('')}</div>`;
+      break;
+    case 'table':
+      inner += `<table class="wf-table"><thead><tr>${sec.headers.map(h=>`<th>${h}</th>`).join('')}</tr></thead><tbody>${sec.rows.map(r=>`<tr>${r.map(c=>`<td>${c}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
+      break;
+    case 'accordion':
+      inner += sec.items.map(it=>`<details class="wf-acc"><summary>${it.title}<span style="font-weight:400;color:#888;">click to expand</span></summary><div class="body">${it.body}</div></details>`).join('');
+      break;
+    case 'split':
+      inner += `<div class="wf-split"><div class="wf-subheading">${sec.text}</div><div class="wf-img" style="height:130px;">${sec.img}</div></div>`;
+      break;
+    case 'form':
+      inner += `<div class="wf-form">${sec.fields.map(f=>`<div class="wf-field">${f}</div>`).join('')}<div class="wf-field area full">${sec.textarea}</div></div><div class="wf-btnrow" style="margin-top:12px;"><div class="wf-btn">${sec.submit}</div></div>`;
+      break;
+    case 'metrics':
+      inner += `<div class="wf-metrics">${sec.items.map(i=>`<div class="wf-metric"><div class="num">##</div><div class="lbl">${i}</div></div>`).join('')}</div>`;
+      break;
+    case 'ctaBlock':
+      inner += `<div class="wf-btnrow">${sec.primary?`<div class="wf-btn">${sec.primary}</div>`:''}${sec.secondary?`<div class="wf-btn secondary">${sec.secondary}</div>`:''}</div>`;
+      break;
+    case 'tree':
+      inner += `<div class="tree">${sec.text}</div>`;
+      break;
+    case 'sitemap':
+      inner += `<div class="sitemap-list">${sec.items.map((it,idx)=>`<div class="sitemap-item" onclick="jumpFromOverview(${idx})"><div class="n">${idx+1}</div><div class="txt"><b>${it[0]}</b><div>${it[1]}</div></div></div>`).join('')}</div>`;
+      break;
+    case 'legend':
+      inner = `<div class="wf-eyebrow">Wireframe Legend</div><div class="legend">
+        <span><span class="sw" style="background:#ececec;border:1.5px solid #222;"></span> Button / CTA</span>
+        <span><span class="sw" style="background:repeating-linear-gradient(45deg,#f2f2f2,#f2f2f2 4px,#e4e4e4 4px,#e4e4e4 8px);border:1.5px dashed #9aa0a6;"></span> Image / illustration placeholder</span>
+        <span><span class="sw" style="background:#fff8e6;border:1.5px dashed #b8860b;"></span> Designer note (from source brief)</span>
+        <span><span class="sw" style="background:#1c2430;"></span> Dark / featured full-width section</span>
+        <span>▸ Click accordion headers to expand phase / step detail</span>
+      </div>`;
+      return `<div class="wf-section">${inner}</div>`;
+  }
+
+  if(sec.note && sec.kind!=='dark') inner += `<div class="wf-note"><strong>Designer Note</strong>${sec.note}</div>`;
+  if(sec.kind==='note-standalone'){
+    return `<div class="wf-section"><div class="wf-tag">${sec.tag}</div><div class="wf-note" style="margin-top:0;"><strong>${sec.heading}</strong>${sec.body}</div></div>`;
+  }
+
+  return `<div class="${cls}">${inner}</div>`;
+}
+
+function renderPage(p){
+  let html = `<div class="wf-page-head"><div class="k">${p.kicker||('WIREFRAME · '+p.title.toUpperCase())}</div><h1>${p.title}</h1>${p.sub?`<div class="k2">${p.sub}</div>`:''}</div>`;
+  p.sections.forEach(sec=>{ html += renderSection(sec); });
+  return html;
+}
+
+/* build sidebar + main */
+const sidebar = document.getElementById('sidebar');
+const main = document.getElementById('main');
+
+PAGES.forEach((p,idx)=>{
+  const btn = document.createElement('button');
+  btn.innerHTML = p.nav.replace(/^\d+\.\s*/, '');
+  btn.dataset.idx = idx;
+  btn.onclick = ()=> showPage(idx);
+  sidebar.appendChild(btn);
+
+  const div = document.createElement('div');
+  div.className = 'page';
+  div.id = 'page-'+p.id;
+  div.innerHTML = renderPage(p);
+  main.appendChild(div);
+});
+
+function showPage(idx){
+  document.querySelectorAll('.page').forEach((el,i)=> el.classList.toggle('active', i===idx));
+  document.querySelectorAll('.sidebar button').forEach((el,i)=> el.classList.toggle('active', i===idx));
+  window.scrollTo(0,0);
+}
+function jumpFromOverview(idx){ showPage(idx+1); }
+
+showPage(0);
+</script>
+</body>
+</html>
