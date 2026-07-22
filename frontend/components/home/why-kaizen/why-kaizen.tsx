@@ -1,9 +1,9 @@
 'use client';
 
 import { useEffect, useRef } from "react";
+import { AnimatedTitle } from "../animated-title";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Lightbulb, Building2, ShieldCheck, Zap, PackageCheck, RefreshCw } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -18,6 +18,7 @@ const PILLARS = [
 
 export function WhyKaizen() {
   const sectionRef = useRef<HTMLElement>(null);
+  const gridRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -36,7 +37,7 @@ export function WhyKaizen() {
         duration: 0.7,
         stagger: 0.1,
         ease: "power3.out",
-        scrollTrigger: { trigger: ".pillar-grid", start: "top 85%" }
+        scrollTrigger: { trigger: gridRef.current, start: "top 85%" }
       });
     }, sectionRef);
     return () => ctx.revert();
@@ -62,9 +63,13 @@ export function WhyKaizen() {
               <div className="w-8 h-px bg-gradient-to-r from-transparent to-[#c8b4a0]" />
               <span className="text-[11px] font-medium text-[#c8b4a0]/60 uppercase tracking-[0.25em]">Why Choose Us</span>
             </div>
-            <h2 className="wk-header text-4xl md:text-5xl lg:text-6xl font-light text-white tracking-tight leading-[1.05] max-w-lg">
-              Why Organizations <span className="text-[#c8b4a0]">Choose Kaizen</span>
-            </h2>
+            <AnimatedTitle
+              className="wk-header text-4xl md:text-5xl lg:text-6xl font-light tracking-tight leading-[1.05] max-w-lg"
+              segments={[
+                { text: "Why Organizations " },
+                { text: "Choose Kaizen", isHighlighted: true }
+              ]}
+            />
           </div>
           <p className="wk-header text-base text-white/40 max-w-md leading-relaxed">
             Focus on outcomes, not features. We measure success by the business results we create — not by the code we write.
@@ -72,9 +77,9 @@ export function WhyKaizen() {
         </div>
 
         {/* Cards Grid */}
-        <div className="pillar-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div ref={gridRef} className="pillar-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {PILLARS.map((pillar, i) => (
-            <div key={i} className="pillar-card group relative bg-[#0f0f0f] border border-white/[0.06] p-8 cursor-pointer overflow-hidden hover:border-[#c8b4a0]/20 transition-all duration-500">
+            <div key={i} className="pillar-card group relative bg-[#0f0f0f] border border-white/[0.06] p-8 cursor-pointer overflow-hidden hover:border-[#c8b4a0]/20 transition-colors duration-500">
               <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-[#c8b4a0]/5 to-transparent" />
 
               <div className="relative z-10">

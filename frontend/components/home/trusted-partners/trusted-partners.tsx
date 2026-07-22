@@ -2,6 +2,7 @@
 
 import { CheckCircle2 } from "lucide-react";
 import React, { useState, useEffect, useRef } from "react";
+import { AnimatedTitle } from "../animated-title";
 import gsap from "gsap";
 
 const PARTNERS = [
@@ -64,9 +65,13 @@ export function TrustedPartners() {
             </span>
           </div>
 
-          <h2 className="tp-header text-4xl md:text-5xl lg:text-6xl font-light mb-4 text-white tracking-tight leading-[1.1]">
-            Partnership Across <span className="text-[#c8b4a0]">Sectors</span>
-          </h2>
+          <AnimatedTitle
+            className="tp-header text-4xl md:text-5xl lg:text-6xl font-light mb-4 tracking-tight leading-[1.1]"
+            segments={[
+              { text: "Partnership Across " },
+              { text: "Sectors", isHighlighted: true }
+            ]}
+          />
 
           <p className="tp-header text-base text-white/40 max-w-xl leading-relaxed">
             From enterprise to emerging markets, our platform empowers diverse organizations to build, scale, and innovate with confidence.

@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from "react";
+import { AnimatedTitle } from "../animated-title";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -20,6 +21,7 @@ const STEPS = [
 
 export function Framework() {
   const sectionRef = useRef<HTMLElement>(null);
+  const stepsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -38,7 +40,7 @@ export function Framework() {
         duration: 0.6,
         stagger: 0.05,
         ease: "power3.out",
-        scrollTrigger: { trigger: ".fw-steps", start: "top 85%" }
+        scrollTrigger: { trigger: stepsRef.current, start: "top 85%" }
       });
     }, sectionRef);
     return () => ctx.revert();
@@ -64,9 +66,13 @@ export function Framework() {
               <div className="w-8 h-px bg-gradient-to-r from-transparent to-[#c8b4a0]" />
               <span className="text-[11px] font-medium text-[#c8b4a0]/60 uppercase tracking-[0.25em]">Our Process</span>
             </div>
-            <h2 className="fw-header text-4xl md:text-5xl lg:text-6xl font-light text-white tracking-tight leading-[1.05] max-w-xl">
-              KINETIC™ <span className="text-[#c8b4a0]">Framework</span>
-            </h2>
+            <AnimatedTitle
+              className="fw-header text-4xl md:text-5xl lg:text-6xl font-light tracking-tight leading-[1.05] max-w-xl"
+              segments={[
+                { text: "KINETIC™ " },
+                { text: "Framework", isHighlighted: true }
+              ]}
+            />
           </div>
           <p className="fw-header text-base text-white/40 max-w-md leading-relaxed">
             A proven 9-phase delivery roadmap that transforms your vision into a live enterprise product.
@@ -74,10 +80,10 @@ export function Framework() {
         </div>
 
         {/* Steps */}
-        <div className="fw-steps grid grid-cols-3 md:grid-cols-6 lg:grid-cols-9 gap-2">
+        <div ref={stepsRef} className="fw-steps grid grid-cols-3 md:grid-cols-6 lg:grid-cols-9 gap-2">
           {STEPS.map((step, i) => (
             <div key={i} className="fw-step group relative">
-              <div className="flex flex-col items-center text-center p-4 bg-[#0f0f0f] border border-white/[0.04] hover:border-[#c8b4a0]/20 transition-all duration-500 cursor-default">
+              <div className="flex flex-col items-center text-center p-4 bg-[#0f0f0f] border border-white/[0.04] hover:border-[#c8b4a0]/20 transition-colors duration-500 cursor-default">
                 <div className="w-10 h-10 mb-3 flex items-center justify-center border border-[#c8b4a0]/20 rounded-full text-[11px] font-light text-[#c8b4a0]/60 group-hover:border-[#c8b4a0]/40 group-hover:text-[#c8b4a0] group-hover:bg-[#c8b4a0]/5 transition-all duration-300">
                   {step.num}
                 </div>

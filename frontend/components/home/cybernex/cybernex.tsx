@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState, useCallback } from "react";
+import { AnimatedTitle } from "../animated-title";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ShieldCheck, ArrowRight, Eye, Lock, Zap, Globe } from "lucide-react";
@@ -43,7 +44,7 @@ export function CyberNex() {
         opacity: 0,
         duration: 1,
         ease: "power3.out",
-        scrollTrigger: { trigger: ".cnx-title", start: "top 85%" }
+        scrollTrigger: { trigger: sectionRef.current, start: "top 75%" }
       });
 
       gsap.from(".cnx-text", {
@@ -52,7 +53,7 @@ export function CyberNex() {
         stagger: 0.1,
         duration: 0.8,
         ease: "power2.out",
-        scrollTrigger: { trigger: ".cnx-text", start: "top 85%" }
+        scrollTrigger: { trigger: sectionRef.current, start: "top 70%" }
       });
 
       gsap.from(".cnx-feat", {
@@ -61,7 +62,7 @@ export function CyberNex() {
         stagger: 0.1,
         duration: 0.6,
         ease: "power3.out",
-        scrollTrigger: { trigger: ".cnx-feats", start: "top 80%" }
+        scrollTrigger: { trigger: sectionRef.current, start: "top 65%" }
       });
     }, sectionRef);
     return () => ctx.revert();
@@ -101,11 +102,14 @@ export function CyberNex() {
               </div>
             </div>
 
-            <h2 className="cnx-title text-4xl md:text-5xl lg:text-6xl font-light text-white tracking-tight leading-[1.05] mb-6">
-              South India's Next Gen{" "}
-              <span className="text-[#c8b4a0]">Cyber Security</span>{" "}
-              Experience Center
-            </h2>
+            <AnimatedTitle
+              className="cnx-title text-4xl md:text-5xl lg:text-6xl font-light tracking-tight leading-[1.05] mb-6"
+              segments={[
+                { text: "South India's Next Gen " },
+                { text: "Cyber Security", isHighlighted: true },
+                { text: " Experience Center" }
+              ]}
+            />
 
             <p className="cnx-text text-base text-white/40 leading-relaxed mb-8 max-w-lg">
               CyberNex bridges classroom learning and enterprise security operations — a fully equipped, enterprise-grade cyber range for ethical hacking, SOC, digital forensics, cloud security, and incident response.

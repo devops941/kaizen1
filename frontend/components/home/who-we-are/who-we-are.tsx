@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from "react";
+import { AnimatedTitle } from "../animated-title";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -80,7 +81,7 @@ export function WhoWeAre() {
         opacity: 0,
         duration: 1,
         ease: "power3.out",
-        scrollTrigger: { trigger: ".wwa-title", start: "top 85%" }
+        scrollTrigger: { trigger: sectionRef.current, start: "top 75%" }
       });
 
       gsap.from(".wwa-text", {
@@ -89,7 +90,7 @@ export function WhoWeAre() {
         duration: 0.8,
         stagger: 0.1,
         ease: "power2.out",
-        scrollTrigger: { trigger: ".wwa-text", start: "top 85%" }
+        scrollTrigger: { trigger: sectionRef.current, start: "top 70%" }
       });
 
       gsap.from(".wwa-step", {
@@ -98,7 +99,7 @@ export function WhoWeAre() {
         stagger: 0.12,
         duration: 0.7,
         ease: "power3.out",
-        scrollTrigger: { trigger: ".wwa-steps", start: "top 80%" }
+        scrollTrigger: { trigger: sectionRef.current, start: "top 65%" }
       });
     }, sectionRef);
     return () => ctx.revert();
@@ -135,12 +136,15 @@ export function WhoWeAre() {
               <span className="text-[11px] font-medium text-[#c8b4a0]/60 uppercase tracking-[0.25em]">Who We Are</span>
             </div>
 
-            <h2 className="wwa-title text-4xl md:text-5xl lg:text-6xl font-light text-white tracking-tight leading-[1.05] mb-8">
-              Technology Built<br />
-              <span className="text-white/40">Around</span><br />
-              <span className="text-[#c8b4a0]">Continuous</span><br />
-              <span className="text-white/60">Improvement</span>
-            </h2>
+            <AnimatedTitle
+              className="wwa-title text-4xl md:text-5xl lg:text-6xl font-light tracking-tight leading-[1.05] mb-8"
+              segments={[
+                { text: "Technology Built " },
+                { text: "Around", className: "text-white/40 block" },
+                { text: "Continuous", isHighlighted: true, className: "block" },
+                { text: "Improvement", className: "text-white/60 block" }
+              ]}
+            />
 
             <p className="wwa-text text-base text-white/40 leading-relaxed mb-6 max-w-md">
               <span className="text-[#c8b4a0]">Kaizen</span> is a Japanese philosophy of continuous improvement through small, consistent, meaningful changes. At Kaizen Infinities, we transformed this philosophy into a modern technology company.
@@ -151,7 +155,7 @@ export function WhoWeAre() {
 
             <blockquote className="wwa-text border-l border-[#c8b4a0]/30 pl-6">
               <p className="text-lg font-light text-white/70 italic leading-relaxed">
-                "We don't sell software. We engineer business transformation."
+                &ldquo;We don&apos;t sell software. We engineer business transformation.&rdquo;
               </p>
             </blockquote>
           </div>

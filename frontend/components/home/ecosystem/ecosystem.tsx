@@ -1,6 +1,7 @@
 'use client';
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
+import { AnimatedTitle } from "../animated-title";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Database, Globe, Smartphone, Brain, Cloud, Server, ShieldCheck, ArrowRight } from "lucide-react";
@@ -18,6 +19,7 @@ const SERVICES = [
 
 export function Ecosystem() {
   const sectionRef = useRef<HTMLElement>(null);
+  const gridRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -36,7 +38,7 @@ export function Ecosystem() {
         duration: 0.7,
         stagger: 0.08,
         ease: "power3.out",
-        scrollTrigger: { trigger: ".eco-grid", start: "top 85%" }
+        scrollTrigger: { trigger: gridRef.current, start: "top 85%" }
       });
     }, sectionRef);
     return () => ctx.revert();
@@ -61,9 +63,13 @@ export function Ecosystem() {
             <span className="text-[11px] font-medium text-[#c8b4a0]/60 uppercase tracking-[0.25em]">Our Services</span>
           </div>
           <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
-            <h2 className="eco-header text-4xl md:text-5xl lg:text-6xl font-light text-white tracking-tight leading-[1.05] max-w-2xl">
-              Our Business <span className="text-[#c8b4a0]">Ecosystem</span>
-            </h2>
+            <AnimatedTitle
+              className="eco-header text-4xl md:text-5xl lg:text-6xl font-light tracking-tight leading-[1.05] max-w-2xl"
+              segments={[
+                { text: "Our Business " },
+                { text: "Ecosystem", isHighlighted: true }
+              ]}
+            />
             <p className="eco-header text-base text-white/40 max-w-md leading-relaxed">
               One technology partner for every digital challenge — from software to cloud to cybersecurity.
             </p>
@@ -71,11 +77,11 @@ export function Ecosystem() {
         </div>
 
         {/* Grid */}
-        <div className="eco-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-12">
+        <div ref={gridRef} className="eco-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-12">
           {SERVICES.map((service, i) => {
             const Icon = service.icon;
             return (
-              <div key={i} className="eco-card group relative bg-[#0f0f0f] border border-white/[0.06] p-8 cursor-pointer overflow-hidden hover:border-[#c8b4a0]/20 transition-all duration-500">
+              <div key={i} className="eco-card group relative bg-[#0f0f0f] border border-white/[0.06] p-8 cursor-pointer overflow-hidden hover:border-[#c8b4a0]/20 transition-colors duration-500">
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-[#c8b4a0]/5 to-transparent" />
 
                 <div className="relative z-10">
@@ -121,7 +127,7 @@ export function Ecosystem() {
                 <span className="text-[#c8b4a0]">Powered by CyberNex</span>
               </h3>
               <p className="text-white/40 leading-relaxed max-w-xl">
-                South India's Next Generation Cyber Security Experience Center. Enterprise-grade cyber range for ethical hacking, SOC, digital forensics, and incident response.
+                South India&apos;s Next Generation Cyber Security Experience Center. Enterprise-grade cyber range for ethical hacking, SOC, digital forensics, and incident response.
               </p>
             </div>
 

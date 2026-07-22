@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from "react";
+import { AnimatedTitle } from "../animated-title";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import {
@@ -27,6 +28,7 @@ const INDUSTRIES = [
 
 export function Industries() {
   const sectionRef = useRef<HTMLElement>(null);
+  const gridRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -45,7 +47,7 @@ export function Industries() {
         duration: 0.6,
         stagger: 0.05,
         ease: "power3.out",
-        scrollTrigger: { trigger: ".ind-grid", start: "top 85%" }
+        scrollTrigger: { trigger: gridRef.current, start: "top 85%" }
       });
     }, sectionRef);
     return () => ctx.revert();
@@ -71,20 +73,24 @@ export function Industries() {
             <span className="text-[11px] font-medium text-[#c8b4a0]/60 uppercase tracking-[0.25em]">Industries</span>
             <div className="w-8 h-px bg-gradient-to-l from-transparent to-[#c8b4a0]" />
           </div>
-          <h2 className="ind-header text-4xl md:text-5xl lg:text-6xl font-light text-white tracking-tight leading-[1.05] mb-6">
-            Industries We <span className="text-[#c8b4a0]">Transform</span>
-          </h2>
+          <AnimatedTitle
+            className="ind-header text-4xl md:text-5xl lg:text-6xl font-light tracking-tight leading-[1.05] mb-6"
+            segments={[
+              { text: "Industries We " },
+              { text: "Transform", isHighlighted: true }
+            ]}
+          />
           <p className="ind-header text-base text-white/40 max-w-xl mx-auto leading-relaxed">
             Purpose-built technology for 12+ verticals. Every industry has unique challenges — we engineer unique solutions.
           </p>
         </div>
 
         {/* Grid */}
-        <div className="ind-grid grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 lg:gap-4">
+        <div ref={gridRef} className="ind-grid grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 lg:gap-4">
           {INDUSTRIES.map((industry, i) => {
             const Icon = industry.icon;
             return (
-              <div key={i} className="ind-item group relative bg-[#0f0f0f] border border-white/[0.04] p-6 cursor-pointer overflow-hidden hover:border-[#c8b4a0]/20 transition-all duration-500">
+              <div key={i} className="ind-item group relative bg-[#0f0f0f] border border-white/[0.04] p-6 cursor-pointer overflow-hidden hover:border-[#c8b4a0]/20 transition-colors duration-500">
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-[#c8b4a0]/5 to-transparent" />
 
                 <div className="relative z-10 flex flex-col items-center text-center gap-4">
