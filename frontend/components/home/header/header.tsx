@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { Button } from "@/components/ui/button";
+import { AnimatedButton } from "../animated-button";
 import { Menu, X } from "lucide-react";
 
 const links = [
@@ -171,9 +172,13 @@ export function Header() {
 
             {/* CTA & Hamburger */}
             <div className="header-reveal flex items-center gap-4">
-              <Button className="hidden sm:inline-flex bg-[#c8b4a0] text-[#080808] rounded-none px-6 py-5 text-[11px] font-medium tracking-[0.1em] hover:bg-[#d4c4b0] transition-colors duration-300">
+              <AnimatedButton
+                px="px-5"
+                py="py-4"
+                className="hidden sm:inline-flex bg-[#c8b4a0] text-[#080808] rounded-none text-[13px] font-medium tracking-[0.1em] hover:bg-[#d4c4b0] transition-colors duration-300"
+              >
                 Schedule Call
-              </Button>
+              </AnimatedButton>
 
               <button
                 onClick={isOpen ? closeMenu : () => setIsOpen(true)}

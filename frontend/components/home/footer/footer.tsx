@@ -3,6 +3,8 @@
 import Link from "next/link";
 import { ArrowRight, Mail, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { AnimatedLink } from "../animated-link";
+import React from "react";
 
 const GithubIcon = ({ className }: { className?: string }) => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
@@ -30,6 +32,45 @@ const YoutubeIcon = ({ className }: { className?: string }) => (
     <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon>
   </svg>
 );
+
+// Animated social link with icon support
+function AnimatedSocialLink({
+  href,
+  icon: Icon,
+  label,
+}: {
+  href: string;
+  icon: React.ComponentType<{ className?: string }>;
+  label: string;
+}) {
+  const chars = label.split("");
+  return (
+    <a
+      href={href}
+      className="flex items-center gap-3 text-sm text-white/40 group transition-colors"
+    >
+      <Icon className="w-4 h-4 flex-shrink-0 transition-colors duration-300 group-hover:text-[#c8b4a0]" />
+      <span className="inline-flex flex-wrap overflow-hidden" aria-label={label}>
+        {chars.map((char, idx) => (
+          <span key={idx} className="relative inline-flex overflow-hidden leading-tight">
+            <span
+              className="relative inline-block transition-transform duration-400 ease-[cubic-bezier(0.76,0,0.24,1)] group-hover:-translate-y-full"
+              style={{ transitionDelay: `${idx * 0.015}s`, transitionDuration: '0.4s' }}
+            >
+              {char === " " ? "\u00A0" : char}
+              <span
+                className="absolute top-full left-0 text-[#c8b4a0]"
+                style={{ transitionDelay: `${idx * 0.015}s` }}
+              >
+                {char === " " ? "\u00A0" : char}
+              </span>
+            </span>
+          </span>
+        ))}
+      </span>
+    </a>
+  );
+}
 
 export function Footer() {
   return (
@@ -104,50 +145,42 @@ export function Footer() {
             <div>
               <h4 className="text-white font-medium mb-6 text-sm tracking-wide">Solutions</h4>
               <ul className="space-y-4 text-sm">
-                <li><Link href="/cybernex" className="hover:text-[#c8b4a0] transition-colors">CyberNex Security</Link></li>
-                <li><Link href="#" className="hover:text-[#c8b4a0] transition-colors">Cloud Infrastructure</Link></li>
-                <li><Link href="#" className="hover:text-[#c8b4a0] transition-colors">AI Automation</Link></li>
-                <li><Link href="#" className="hover:text-[#c8b4a0] transition-colors">ERP Systems</Link></li>
-                <li><Link href="#" className="hover:text-[#c8b4a0] transition-colors">Custom Software</Link></li>
+                <li><AnimatedLink href="/cybernex" className="text-white/40">CyberNex Security</AnimatedLink></li>
+                <li><AnimatedLink href="#" className="text-white/40">Cloud Infrastructure</AnimatedLink></li>
+                <li><AnimatedLink href="#" className="text-white/40">AI Automation</AnimatedLink></li>
+                <li><AnimatedLink href="#" className="text-white/40">ERP Systems</AnimatedLink></li>
+                <li><AnimatedLink href="#" className="text-white/40">Custom Software</AnimatedLink></li>
               </ul>
             </div>
 
             <div>
               <h4 className="text-white font-medium mb-6 text-sm tracking-wide">Framework</h4>
               <ul className="space-y-4 text-sm">
-                <li><Link href="/kinetic" className="hover:text-[#c8b4a0] transition-colors">KINETIC™ Delivery</Link></li>
-                <li><Link href="#" className="hover:text-[#c8b4a0] transition-colors">Zero-Trust Architecture</Link></li>
-                <li><Link href="#" className="hover:text-[#c8b4a0] transition-colors">Agile Engineering</Link></li>
-                <li><Link href="#" className="hover:text-[#c8b4a0] transition-colors">CI/CD Pipelines</Link></li>
+                <li><AnimatedLink href="/kinetic" className="text-white/40">KINETIC™ Delivery</AnimatedLink></li>
+                <li><AnimatedLink href="#" className="text-white/40">Zero-Trust Architecture</AnimatedLink></li>
+                <li><AnimatedLink href="#" className="text-white/40">Agile Engineering</AnimatedLink></li>
+                <li><AnimatedLink href="#" className="text-white/40">CI/CD Pipelines</AnimatedLink></li>
               </ul>
             </div>
 
             <div>
               <h4 className="text-white font-medium mb-6 text-sm tracking-wide">Company</h4>
               <ul className="space-y-4 text-sm">
-                <li><Link href="/about" className="hover:text-[#c8b4a0] transition-colors">About Us</Link></li>
-                <li><Link href="#" className="hover:text-[#c8b4a0] transition-colors">Careers</Link></li>
-                <li><Link href="#" className="hover:text-[#c8b4a0] transition-colors">Case Studies</Link></li>
-                <li><Link href="/contact" className="hover:text-[#c8b4a0] transition-colors">Contact</Link></li>
-                <li><Link href="/resources" className="hover:text-[#c8b4a0] transition-colors">Resources</Link></li>
+                <li><AnimatedLink href="/about" className="text-white/40">About Us</AnimatedLink></li>
+                <li><AnimatedLink href="#" className="text-white/40">Careers</AnimatedLink></li>
+                <li><AnimatedLink href="#" className="text-white/40">Case Studies</AnimatedLink></li>
+                <li><AnimatedLink href="/contact" className="text-white/40">Contact</AnimatedLink></li>
+                <li><AnimatedLink href="/resources" className="text-white/40">Resources</AnimatedLink></li>
               </ul>
             </div>
 
             <div>
               <h4 className="text-white font-medium mb-6 text-sm tracking-wide">Connect</h4>
               <div className="flex flex-col space-y-4">
-                <a href="#" className="flex items-center gap-3 hover:text-[#c8b4a0] transition-colors text-sm">
-                  <LinkedinIcon className="w-4 h-4" /> LinkedIn
-                </a>
-                <a href="#" className="flex items-center gap-3 hover:text-[#c8b4a0] transition-colors text-sm">
-                  <TwitterIcon className="w-4 h-4" /> Twitter
-                </a>
-                <a href="#" className="flex items-center gap-3 hover:text-[#c8b4a0] transition-colors text-sm">
-                  <YoutubeIcon className="w-4 h-4" /> YouTube
-                </a>
-                <a href="#" className="flex items-center gap-3 hover:text-[#c8b4a0] transition-colors text-sm">
-                  <GithubIcon className="w-4 h-4" /> GitHub
-                </a>
+                <AnimatedSocialLink href="#" icon={LinkedinIcon} label="LinkedIn" />
+                <AnimatedSocialLink href="#" icon={TwitterIcon} label="Twitter" />
+                <AnimatedSocialLink href="#" icon={YoutubeIcon} label="YouTube" />
+                <AnimatedSocialLink href="#" icon={GithubIcon} label="GitHub" />
               </div>
             </div>
           </div>
@@ -159,9 +192,9 @@ export function Footer() {
             © {new Date().getFullYear()} Kaizen Infinities Private Limited. All rights reserved.
           </p>
           <div className="flex items-center gap-6 text-xs text-white/30">
-            <Link href="#" className="hover:text-[#c8b4a0] transition-colors">Privacy Policy</Link>
-            <Link href="#" className="hover:text-[#c8b4a0] transition-colors">Terms of Service</Link>
-            <Link href="#" className="hover:text-[#c8b4a0] transition-colors">Cookie Policy</Link>
+            <AnimatedLink href="#" className="text-white/30">Privacy Policy</AnimatedLink>
+            <AnimatedLink href="#" className="text-white/30">Terms of Service</AnimatedLink>
+            <AnimatedLink href="#" className="text-white/30">Cookie Policy</AnimatedLink>
           </div>
         </div>
       </div>

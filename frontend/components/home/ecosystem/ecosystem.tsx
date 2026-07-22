@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import { AnimatedTitle } from "../animated-title";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { AnimatedButton } from "../animated-button";
 import { Database, Globe, Smartphone, Brain, Cloud, Server, ShieldCheck, ArrowRight } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -132,10 +133,14 @@ export function Ecosystem() {
             </div>
 
             <div className="flex-shrink-0">
-              <a href="#" className="group/btn inline-flex items-center gap-3 bg-[#c8b4a0] text-[#080808] px-8 py-4 text-[11px] font-medium tracking-[0.1em] hover:bg-[#d4c4b0] transition-colors duration-300">
+              <AnimatedButton
+                px="px-5"
+                py="py-4"
+                icon={<ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />}
+                className="bg-[#c8b4a0] text-[#080808] text-[11px] font-medium tracking-[0.1em]"
+              >
                 Explore CyberNex
-                <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
-              </a>
+              </AnimatedButton>
             </div>
           </div>
         </div>

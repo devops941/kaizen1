@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, useCallback } from "react";
 import { AnimatedTitle } from "../animated-title";
+import { AnimatedButton } from "../animated-button";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ShieldCheck, ArrowRight, Eye, Lock, Zap, Globe } from "lucide-react";
@@ -130,13 +131,21 @@ export function CyberNex() {
             </div>
 
             <div className="cnx-text flex flex-wrap gap-4">
-              <a href="#" className="group inline-flex items-center gap-3 bg-[#c8b4a0] text-[#080808] px-6 py-4 text-[11px] font-medium tracking-[0.1em] hover:bg-[#d4c4b0] transition-colors duration-300">
+              <AnimatedButton
+                px="px-5"
+                py="py-4"
+                icon={<ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />}
+                className="bg-[#c8b4a0] text-[#080808] text-[11px] font-medium tracking-[0.1em]"
+              >
                 Explore CyberNex
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </a>
-              <a href="#" className="inline-flex items-center gap-3 border border-white/[0.1] px-6 py-4 text-[11px] font-medium tracking-[0.1em] text-white/50 hover:text-white/70 hover:border-[#c8b4a0]/30 transition-all duration-300">
+              </AnimatedButton>
+              <AnimatedButton
+                px="px-5"
+                py="py-4"
+                className="border border-white/[0.1] text-[11px] font-medium tracking-[0.1em] text-white/50 hover:text-white/70 hover:border-[#c8b4a0]/30 transition-all duration-300"
+              >
                 Security Audit
-              </a>
+              </AnimatedButton>
             </div>
           </div>
 

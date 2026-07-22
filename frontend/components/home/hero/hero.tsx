@@ -3,8 +3,8 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Button } from "@/components/ui/button";
 import { ArrowRight, Play } from "lucide-react";
+import { AnimatedButton } from "@/components/home/animated-button";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -173,12 +173,14 @@ export function Hero() {
                         </p>
 
                         <div className="hero-cta flex flex-wrap items-center gap-6">
-                            <Button className="group relative bg-[#c8b4a0] text-[#080808] rounded-none px-8 py-6 font-medium tracking-wide overflow-hidden">
-                                <span className="relative z-10 flex items-center gap-3">
-                                    Schedule Consultation
-                                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                                </span>
-                            </Button>
+                            <AnimatedButton
+                                px="px-5"
+                                py="py-4"
+                                icon={<ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />}
+                                className="bg-[#c8b4a0] text-[#080808] rounded-none text-[13px] font-medium tracking-[0.1em]"
+                            >
+                                Schedule Consultation
+                            </AnimatedButton>
 
                             <button className="group flex items-center gap-4 text-white/50 hover:text-white transition-colors duration-300">
                                 <div className="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center group-hover:border-[#c8b4a0]/40 group-hover:bg-[#c8b4a0]/5 transition-all duration-300">
