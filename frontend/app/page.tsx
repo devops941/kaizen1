@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Banner } from "@/components/home/banner/banner";
+import { Hero } from "@/components/home/hero/hero";
 import { TrustedPartners } from "@/components/home/trusted-partners/trusted-partners";
 import { WhoWeAre } from "@/components/home/who-we-are/who-we-are";
 import { Ecosystem } from "@/components/home/ecosystem/ecosystem";
@@ -11,7 +11,7 @@ import { CyberNex } from "@/components/home/cybernex/cybernex";
 export default function Home() {
   return (
     <div className="flex flex-col min-h-screen">
-      <Banner />
+      <Hero />
       <TrustedPartners />
       <WhoWeAre />
       <Ecosystem />

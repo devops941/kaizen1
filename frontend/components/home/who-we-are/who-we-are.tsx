@@ -7,19 +7,17 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 const STATS = [
-  { value: 200, suffix: "+", label: "Enterprise Projects Delivered" },
-  { value: 150, suffix: "+", label: "Clients Across Industries" },
-  { value: 99.9, suffix: "%", label: "Uptime SLA Guarantee" },
-  { value: 10, suffix: "+", label: "Years of Engineering Excellence" },
+  { value: 200, suffix: "+", label: "Enterprise Projects" },
+  { value: 150, suffix: "+", label: "Global Clients" },
+  { value: 99.9, suffix: "%", label: "Uptime SLA" },
+  { value: 10, suffix: "+", label: "Years Experience" },
 ];
 
 const PHILOSOPHY_STEPS = [
-  { label: "Vision", color: "bg-zinc-950" },
-  { label: "Strategy", color: "bg-zinc-800" },
-  { label: "Technology", color: "bg-zinc-700" },
-  { label: "Implementation", color: "bg-zinc-600" },
-  { label: "Continuous Improvement", color: "bg-zinc-500" },
-  { label: "Business Success", color: "bg-emerald-600" },
+  { label: "Vision", desc: "Understanding your goals" },
+  { label: "Strategy", desc: "Planning the path" },
+  { label: "Technology", desc: "Building solutions" },
+  { label: "Deliver", desc: "Ship & scale" },
 ];
 
 function StatCounter({ value, suffix, label }: { value: number; suffix: string; label: string }) {
@@ -35,31 +33,31 @@ function StatCounter({ value, suffix, label }: { value: number; suffix: string; 
       ([entry]) => {
         if (entry.isIntersecting && !triggered.current) {
           triggered.current = true;
-          const duration = 1800;
+          const duration = 2000;
           const start = performance.now();
           const animate = (now: number) => {
             const elapsed = now - start;
             const progress = Math.min(elapsed / duration, 1);
-            const eased = 1 - Math.pow(1 - progress, 3);
+            const eased = 1 - Math.pow(1 - progress, 4);
             setCount(parseFloat((eased * value).toFixed(1)));
             if (progress < 1) requestAnimationFrame(animate);
           };
           requestAnimationFrame(animate);
         }
       },
-      { threshold: 0.5 }
+      { threshold: 0.3 }
     );
     observer.observe(el);
     return () => observer.disconnect();
   }, [value]);
 
   return (
-    <div ref={ref} className="flex flex-col items-center text-center group">
-      <div className="text-5xl md:text-6xl font-black text-zinc-950 tracking-tighter tabular-nums leading-none mb-2">
+    <div ref={ref} className="group">
+      <div className="text-4xl md:text-5xl font-extralight text-white tracking-tight tabular-nums mb-2">
         {value % 1 === 0 ? Math.round(count) : count.toFixed(1)}
-        <span className="text-emerald-500">{suffix}</span>
+        <span className="text-[#c8b4a0]">{suffix}</span>
       </div>
-      <div className="text-xs font-bold text-zinc-500 uppercase tracking-widest max-w-[120px] leading-relaxed">{label}</div>
+      <div className="text-[11px] text-white/30 tracking-[0.15em] uppercase">{label}</div>
     </div>
   );
 }
@@ -69,70 +67,113 @@ export function WhoWeAre() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.from(".wwa-text-el", {
-        opacity: 0,
-        y: 40,
-        stagger: 0.15,
-        duration: 0.9,
-        ease: "power3.out",
-        scrollTrigger: { trigger: ".wwa-text-el", start: "top 85%", toggleActions: "play none none none" }
-      });
-      gsap.from(".wwa-step", {
-        opacity: 0,
+      gsap.from(".wwa-eyebrow", {
         x: -30,
+        opacity: 0,
+        duration: 1,
+        ease: "power3.out",
+        scrollTrigger: { trigger: sectionRef.current, start: "top 80%" }
+      });
+
+      gsap.from(".wwa-title", {
+        y: 60,
+        opacity: 0,
+        duration: 1,
+        ease: "power3.out",
+        scrollTrigger: { trigger: ".wwa-title", start: "top 85%" }
+      });
+
+      gsap.from(".wwa-text", {
+        y: 30,
+        opacity: 0,
+        duration: 0.8,
         stagger: 0.1,
-        duration: 0.7,
         ease: "power2.out",
-        scrollTrigger: { trigger: ".wwa-steps", start: "top 80%", toggleActions: "play none none none" }
+        scrollTrigger: { trigger: ".wwa-text", start: "top 85%" }
+      });
+
+      gsap.from(".wwa-step", {
+        x: -40,
+        opacity: 0,
+        stagger: 0.12,
+        duration: 0.7,
+        ease: "power3.out",
+        scrollTrigger: { trigger: ".wwa-steps", start: "top 80%" }
       });
     }, sectionRef);
     return () => ctx.revert();
   }, []);
 
   return (
-    <section ref={sectionRef} className="py-24 bg-white border-b border-zinc-100 overflow-hidden">
-      <div className="container mx-auto px-4 md:px-12 lg:px-24">
+    <section ref={sectionRef} className="relative py-24 lg:py-40 bg-[#0a0a0a] overflow-hidden">
+      {/* Background */}
+      <div className="absolute inset-0">
+        <div className="absolute inset-0 opacity-[0.015]" style={{
+          backgroundImage: 'linear-gradient(#c8b4a0 1px, transparent 1px), linear-gradient(90deg, #c8b4a0 1px, transparent 1px)',
+          backgroundSize: '80px 80px'
+        }} />
+        <div className="absolute top-0 right-0 w-1/2 h-full">
+          <div className="absolute top-1/4 right-0 w-[500px] h-[500px] bg-gradient-to-br from-[#c8b4a0]/5 via-transparent to-transparent rounded-full blur-[150px]" />
+        </div>
+        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#c8b4a0]/15 to-transparent" />
+      </div>
 
+      <div className="container mx-auto px-6 lg:px-12 relative z-10">
         {/* Stats Row */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-10 mb-24 pb-24 border-b border-zinc-100">
-          {STATS.map((stat, i) => <StatCounter key={i} {...stat} />)}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 mb-20 pb-16 border-b border-white/[0.06]">
+          {STATS.map((stat, i) => (
+            <StatCounter key={i} {...stat} />
+          ))}
         </div>
 
-        {/* Who We Are Content */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        {/* Content */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-start">
           {/* Left: Text */}
           <div>
-            <div className="wwa-text-el text-[10px] font-black text-emerald-600 uppercase tracking-[0.3em] mb-4">Who We Are</div>
-            <h2 className="wwa-text-el text-4xl md:text-5xl font-black text-zinc-950 tracking-tighter leading-[1.05] uppercase mb-6">
-              Technology Built Around <span className="text-zinc-400">Continuous Improvement</span>
+            <div className="wwa-eyebrow flex items-center gap-4 mb-6">
+              <div className="w-8 h-px bg-gradient-to-r from-transparent to-[#c8b4a0]" />
+              <span className="text-[11px] font-medium text-[#c8b4a0]/60 uppercase tracking-[0.25em]">Who We Are</span>
+            </div>
+
+            <h2 className="wwa-title text-4xl md:text-5xl lg:text-6xl font-light text-white tracking-tight leading-[1.05] mb-8">
+              Technology Built<br />
+              <span className="text-white/40">Around</span><br />
+              <span className="text-[#c8b4a0]">Continuous</span><br />
+              <span className="text-white/60">Improvement</span>
             </h2>
-            <p className="wwa-text-el text-base text-zinc-600 leading-relaxed mb-4 max-w-lg">
-              Kaizen is a Japanese philosophy of continuous improvement through small, consistent, meaningful changes. At Kaizen Infinities, we transformed this philosophy into a modern technology company.
+
+            <p className="wwa-text text-base text-white/40 leading-relaxed mb-6 max-w-md">
+              <span className="text-[#c8b4a0]">Kaizen</span> is a Japanese philosophy of continuous improvement through small, consistent, meaningful changes. At Kaizen Infinities, we transformed this philosophy into a modern technology company.
             </p>
-            <p className="wwa-text-el text-base text-zinc-600 leading-relaxed mb-8 max-w-lg">
+            <p className="wwa-text text-base text-white/40 leading-relaxed mb-10 max-w-md">
               Enterprise software, ERP, cloud-native applications, intelligent automation, AI, and cybersecurity — helping organizations become smarter, faster, and more secure.
             </p>
-            <blockquote className="wwa-text-el border-l-4 border-zinc-950 pl-6 text-lg font-bold text-zinc-800 italic">
-              "We don't sell software. We engineer business transformation."
+
+            <blockquote className="wwa-text border-l border-[#c8b4a0]/30 pl-6">
+              <p className="text-lg font-light text-white/70 italic leading-relaxed">
+                "We don't sell software. We engineer business transformation."
+              </p>
             </blockquote>
           </div>
 
-          {/* Right: Philosophy Flow */}
-          <div className="wwa-steps relative">
-            <div className="text-[10px] font-black text-zinc-400 uppercase tracking-[0.3em] mb-6">Our Philosophy</div>
-            <div className="flex flex-col gap-2">
+          {/* Right: Philosophy */}
+          <div className="wwa-steps lg:pt-8">
+            <div className="text-[11px] font-medium text-white/30 uppercase tracking-[0.2em] mb-8">Our Philosophy</div>
+
+            <div className="relative">
+              <div className="absolute left-[15px] top-0 bottom-0 w-px bg-gradient-to-b from-[#c8b4a0]/30 via-[#c8b4a0]/10 to-transparent" />
+
               {PHILOSOPHY_STEPS.map((step, i) => (
-                <div key={i} className="wwa-step group flex items-center gap-4">
-                  <div className={`w-8 h-8 rounded-full ${step.color} flex items-center justify-center text-white text-xs font-black flex-shrink-0 group-hover:scale-110 transition-transform`}>
-                    {i + 1}
+                <div key={i} className="wwa-step group relative flex items-start gap-6 mb-8 last:mb-0">
+                  <div className="relative w-8 h-8 flex items-center justify-center flex-shrink-0 z-10">
+                    <div className="w-full h-full border border-[#c8b4a0]/30 rounded-full group-hover:border-[#c8b4a0]/60 transition-colors duration-300" />
+                    <div className="absolute inset-2 bg-[#c8b4a0]/10 rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
                   </div>
-                  <div className={`flex-1 py-3 px-5 ${step.color} text-white font-bold text-sm tracking-wide rounded-r-lg group-hover:translate-x-2 transition-transform`}
-                    style={{ marginLeft: `${i * 16}px` }}>
-                    {step.label}
+
+                  <div className="flex-1 pt-1">
+                    <h4 className="text-base font-medium text-white mb-1 group-hover:text-[#c8b4a0] transition-colors">{step.label}</h4>
+                    <p className="text-sm text-white/30">{step.desc}</p>
                   </div>
-                  {i < PHILOSOPHY_STEPS.length - 1 && (
-                    <div className="absolute left-[15px] mt-8 w-px h-full bg-zinc-100" />
-                  )}
                 </div>
               ))}
             </div>
