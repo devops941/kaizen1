@@ -135,14 +135,14 @@ export function CyberNex() {
                 px="px-5"
                 py="py-4"
                 icon={<ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />}
-                className="bg-[#c8b4a0] text-[#080808] text-[11px] font-medium tracking-[0.1em]"
+                className="bg-[#c8b4a0] text-[#080808] text-[13px] font-medium tracking-[0.1em]"
               >
                 Explore CyberNex
               </AnimatedButton>
               <AnimatedButton
                 px="px-5"
                 py="py-4"
-                className="border border-white/[0.1] text-[11px] font-medium tracking-[0.1em] text-white/50 hover:text-white/70 hover:border-[#c8b4a0]/30 transition-all duration-300"
+                className="border border-white/[0.1] text-[13px] font-medium tracking-[0.1em] text-white/50 hover:text-white/70 hover:border-[#c8b4a0]/30 transition-all duration-300"
               >
                 Security Audit
               </AnimatedButton>

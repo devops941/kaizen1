@@ -137,7 +137,7 @@ export function Ecosystem() {
                 px="px-5"
                 py="py-4"
                 icon={<ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />}
-                className="bg-[#c8b4a0] text-[#080808] text-[11px] font-medium tracking-[0.1em]"
+                className="bg-[#c8b4a0] text-[#080808] text-[13px] font-medium tracking-[0.1em]"
               >
                 Explore CyberNex
               </AnimatedButton>
