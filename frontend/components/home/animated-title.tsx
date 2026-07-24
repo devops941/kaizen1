@@ -11,13 +11,16 @@ export interface TextSegment {
 interface AnimatedTitleProps {
   segments: TextSegment[];
   className?: string;
+  theme?: 'dark' | 'light';
 }
 
-export function AnimatedTitle({ segments, className = "" }: AnimatedTitleProps) {
+export function AnimatedTitle({ segments, className = "", theme = "dark" }: AnimatedTitleProps) {
   let charCounter = 0;
 
   // Compute clean text for screen readers
   const fullText = segments.map(s => s.text).join("");
+
+  const isLight = theme === "light";
 
   return (
     <h2 className={`group relative cursor-default select-none ${className}`}>
@@ -27,17 +30,22 @@ export function AnimatedTitle({ segments, className = "" }: AnimatedTitleProps) 
           // Split segment text into individual words
           const words = segment.text.split(" ");
           
-          // Determine colors based on segment properties
-          let colorClass = segment.isHighlighted ? "text-[#c8b4a0]" : "text-white";
-          let hoverColorClass = segment.isHighlighted ? "text-white" : "text-[#c8b4a0]";
+          // Determine colors based on theme and segment properties
+          let defaultNormal = isLight ? "text-[#080808]" : "text-white";
+          let defaultHighlight = isLight ? "text-[#9e7b56]" : "text-[#c8b4a0]";
+          let defaultHoverHighlight = isLight ? "text-[#080808]" : "text-white";
+          let defaultHoverNormal = isLight ? "text-[#9e7b56]" : "text-[#c8b4a0]";
+
+          let colorClass = segment.isHighlighted ? defaultHighlight : defaultNormal;
+          let hoverColorClass = segment.isHighlighted ? defaultHoverHighlight : defaultHoverNormal;
           
-          // If the segment has a custom className with a text color override, we should respect it
+          // If the segment has a custom className with a text color override, respect it
           if (segment.className?.includes("text-white/40")) {
-            colorClass = "text-white/40";
-            hoverColorClass = "text-[#c8b4a0]/60";
+            colorClass = isLight ? "text-[#080808]/50" : "text-white/40";
+            hoverColorClass = isLight ? "text-[#9e7b56]" : "text-[#c8b4a0]/60";
           } else if (segment.className?.includes("text-white/60")) {
-            colorClass = "text-white/60";
-            hoverColorClass = "text-[#c8b4a0]/80";
+            colorClass = isLight ? "text-[#080808]/70" : "text-white/60";
+            hoverColorClass = isLight ? "text-[#9e7b56]" : "text-[#c8b4a0]/80";
           }
 
           const isBlock = segment.className?.includes("block");

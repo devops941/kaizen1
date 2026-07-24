@@ -22,29 +22,59 @@ export function WhyKaizen() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.from(".wk-header", {
-        y: 40,
-        opacity: 0,
-        duration: 1,
-        stagger: 0.1,
-        ease: "power3.out",
-        scrollTrigger: { trigger: sectionRef.current, start: "top 80%" }
-      });
+      if (!sectionRef.current) return;
 
-      gsap.from(".pillar-card", {
-        y: 50,
-        opacity: 0,
-        duration: 0.7,
-        stagger: 0.1,
-        ease: "power3.out",
-        scrollTrigger: { trigger: gridRef.current, start: "top 85%" }
-      });
+      gsap.fromTo(
+        ".wk-header",
+        { y: 35, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.8,
+          stagger: 0.1,
+          ease: "power3.out",
+          clearProps: "transform,opacity",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 90%",
+            once: true,
+            toggleActions: "play none none none"
+          }
+        }
+      );
+
+      gsap.fromTo(
+        ".pillar-card",
+        { y: 45, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.7,
+          stagger: 0.08,
+          ease: "power3.out",
+          clearProps: "transform,opacity",
+          scrollTrigger: {
+            trigger: gridRef.current || sectionRef.current,
+            start: "top 90%",
+            once: true,
+            toggleActions: "play none none none"
+          }
+        }
+      );
     }, sectionRef);
-    return () => ctx.revert();
+
+    const timer = setTimeout(() => {
+      ScrollTrigger.refresh();
+    }, 150);
+
+    return () => {
+      clearTimeout(timer);
+      ctx.revert();
+    };
   }, []);
 
   return (
-    <section ref={sectionRef} className="relative py-24 lg:py-40 bg-[#0a0a0a] overflow-hidden">
+    <section ref={sectionRef} className="relative py-15 lg:py-30 bg-[#0a0a0a] overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 opacity-[0.015]" style={{

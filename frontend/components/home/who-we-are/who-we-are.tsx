@@ -15,10 +15,30 @@ const STATS = [
 ];
 
 const PHILOSOPHY_STEPS = [
-  { label: "Vision", desc: "Understanding your goals" },
-  { label: "Strategy", desc: "Planning the path" },
-  { label: "Technology", desc: "Building solutions" },
-  { label: "Deliver", desc: "Ship & scale" },
+  {
+    num: "01",
+    label: "Strategic Vision",
+    desc: "Analyzing core business goals and operational workflows to engineer tailored software strategies.",
+    tag: "Phase 01 — Analysis"
+  },
+  {
+    num: "02",
+    label: "Scalable Architecture",
+    desc: "Designing resilient cloud-native systems, modular microservices, and API-first data foundations.",
+    tag: "Phase 02 — Blueprint"
+  },
+  {
+    num: "03",
+    label: "Intelligent Engineering",
+    desc: "Building high-performance applications with AI automation, enterprise ERPs, and zero-trust security.",
+    tag: "Phase 03 — Execution"
+  },
+  {
+    num: "04",
+    label: "Continuous Evolution",
+    desc: "Perpetual refinement, automated monitoring, and iterative enhancements true to our Kaizen philosophy.",
+    tag: "Phase 04 — Evolution"
+  },
 ];
 
 function StatCounter({ value, suffix, label }: { value: number; suffix: string; label: string }) {
@@ -68,45 +88,95 @@ export function WhoWeAre() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.from(".wwa-eyebrow", {
-        x: -30,
-        opacity: 0,
-        duration: 1,
-        ease: "power3.out",
-        scrollTrigger: { trigger: sectionRef.current, start: "top 80%" }
-      });
+      if (!sectionRef.current) return;
 
-      gsap.from(".wwa-title", {
-        y: 60,
-        opacity: 0,
-        duration: 1,
-        ease: "power3.out",
-        scrollTrigger: { trigger: sectionRef.current, start: "top 75%" }
-      });
+      gsap.fromTo(
+        ".wwa-eyebrow",
+        { x: -30, opacity: 0 },
+        {
+          x: 0,
+          opacity: 1,
+          duration: 0.8,
+          ease: "power3.out",
+          clearProps: "transform,opacity",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 90%",
+            once: true,
+            toggleActions: "play none none none"
+          }
+        }
+      );
 
-      gsap.from(".wwa-text", {
-        y: 30,
-        opacity: 0,
-        duration: 0.8,
-        stagger: 0.1,
-        ease: "power2.out",
-        scrollTrigger: { trigger: sectionRef.current, start: "top 70%" }
-      });
+      gsap.fromTo(
+        ".wwa-title",
+        { y: 40, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.8,
+          ease: "power3.out",
+          clearProps: "transform,opacity",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 88%",
+            once: true,
+            toggleActions: "play none none none"
+          }
+        }
+      );
 
-      gsap.from(".wwa-step", {
-        x: -40,
-        opacity: 0,
-        stagger: 0.12,
-        duration: 0.7,
-        ease: "power3.out",
-        scrollTrigger: { trigger: sectionRef.current, start: "top 65%" }
-      });
+      gsap.fromTo(
+        ".wwa-text",
+        { y: 30, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.7,
+          stagger: 0.1,
+          ease: "power2.out",
+          clearProps: "transform,opacity",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 85%",
+            once: true,
+            toggleActions: "play none none none"
+          }
+        }
+      );
+
+      gsap.fromTo(
+        ".wwa-step",
+        { y: 30, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          stagger: 0.1,
+          duration: 0.6,
+          ease: "power3.out",
+          clearProps: "transform,opacity",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 80%",
+            once: true,
+            toggleActions: "play none none none"
+          }
+        }
+      );
     }, sectionRef);
-    return () => ctx.revert();
+
+    const timer = setTimeout(() => {
+      ScrollTrigger.refresh();
+    }, 150);
+
+    return () => {
+      clearTimeout(timer);
+      ctx.revert();
+    };
   }, []);
 
   return (
-    <section ref={sectionRef} className="relative py-24 lg:py-40 bg-[#0a0a0a] overflow-hidden">
+    <section ref={sectionRef} className="relative py-15 lg:py-30 bg-[#0a0a0a] overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 opacity-[0.015]" style={{
@@ -128,56 +198,72 @@ export function WhoWeAre() {
         </div>
 
         {/* Content */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-start">
-          {/* Left: Text */}
-          <div>
-            <div className="wwa-eyebrow flex items-center gap-4 mb-6">
-              <div className="w-8 h-px bg-gradient-to-r from-transparent to-[#c8b4a0]" />
-              <span className="text-[11px] font-medium text-[#c8b4a0]/60 uppercase tracking-[0.25em]">Who We Are</span>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-stretch">
+          {/* Left: Text (Span 6) */}
+          <div className="lg:col-span-6 flex flex-col justify-between">
+            <div>
+              <div className="wwa-eyebrow flex items-center gap-4 mb-6">
+                <div className="w-8 h-px bg-gradient-to-r from-transparent to-[#c8b4a0]" />
+                <span className="text-[11px] font-medium text-[#c8b4a0]/60 uppercase tracking-[0.25em]">Who We Are</span>
+              </div>
+
+              <AnimatedTitle
+                className="wwa-title text-4xl md:text-5xl lg:text-6xl font-light tracking-tight leading-[1.05] mb-8"
+                segments={[
+                  { text: "Technology Built " },
+                  { text: "Around", className: "text-white/40 block" },
+                  { text: "Continuous", isHighlighted: true, className: "block" },
+                  { text: "Improvement", className: "text-white/60 block" }
+                ]}
+              />
+
+              <p className="wwa-text text-base text-white/40 leading-relaxed mb-6 max-w-lg">
+                <span className="text-[#c8b4a0]">Kaizen</span> is a Japanese philosophy of continuous improvement through small, consistent, meaningful changes. At Kaizen Infinities, we transformed this philosophy into a modern technology company.
+              </p>
+              <p className="wwa-text text-base text-white/40 leading-relaxed mb-10 max-w-lg">
+                Enterprise software, ERP, cloud-native applications, intelligent automation, AI, and cybersecurity — helping organizations become smarter, faster, and more secure.
+              </p>
             </div>
 
-            <AnimatedTitle
-              className="wwa-title text-4xl md:text-5xl lg:text-6xl font-light tracking-tight leading-[1.05] mb-8"
-              segments={[
-                { text: "Technology Built " },
-                { text: "Around", className: "text-white/40 block" },
-                { text: "Continuous", isHighlighted: true, className: "block" },
-                { text: "Improvement", className: "text-white/60 block" }
-              ]}
-            />
-
-            <p className="wwa-text text-base text-white/40 leading-relaxed mb-6 max-w-md">
-              <span className="text-[#c8b4a0]">Kaizen</span> is a Japanese philosophy of continuous improvement through small, consistent, meaningful changes. At Kaizen Infinities, we transformed this philosophy into a modern technology company.
-            </p>
-            <p className="wwa-text text-base text-white/40 leading-relaxed mb-10 max-w-md">
-              Enterprise software, ERP, cloud-native applications, intelligent automation, AI, and cybersecurity — helping organizations become smarter, faster, and more secure.
-            </p>
-
-            <blockquote className="wwa-text border-l border-[#c8b4a0]/30 pl-6">
+            <blockquote className="wwa-text border-l border-[#c8b4a0]/30 pl-6 mt-4">
               <p className="text-lg font-light text-white/70 italic leading-relaxed">
                 &ldquo;We don&apos;t sell software. We engineer business transformation.&rdquo;
               </p>
             </blockquote>
           </div>
 
-          {/* Right: Philosophy */}
-          <div className="wwa-steps lg:pt-8">
-            <div className="text-[11px] font-medium text-white/30 uppercase tracking-[0.2em] mb-8">Our Philosophy</div>
+          {/* Right: Philosophy (Span 6) */}
+          <div className="lg:col-span-6 flex flex-col justify-between">
+            <div className="wwa-eyebrow flex items-center justify-between mb-8 pb-4 border-b border-white/[0.06]">
+              <div className="text-[11px] font-semibold text-[#c8b4a0] uppercase tracking-[0.25em]">Our Philosophy</div>
+              <span className="text-[10px] text-white/30 uppercase tracking-widest font-mono">4-Stage Methodology</span>
+            </div>
 
-            <div className="relative">
-              <div className="absolute left-[15px] top-0 bottom-0 w-px bg-gradient-to-b from-[#c8b4a0]/30 via-[#c8b4a0]/10 to-transparent" />
-
+            <div className="grid grid-cols-1 gap-4">
               {PHILOSOPHY_STEPS.map((step, i) => (
-                <div key={i} className="wwa-step group relative flex items-start gap-6 mb-8 last:mb-0">
-                  <div className="relative w-8 h-8 flex items-center justify-center flex-shrink-0 z-10">
-                    <div className="w-full h-full border border-[#c8b4a0]/30 rounded-full group-hover:border-[#c8b4a0]/60 transition-colors duration-300" />
-                    <div className="absolute inset-2 bg-[#c8b4a0]/10 rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div
+                  key={i}
+                  className="wwa-step group relative bg-[#0f0f0f] border border-white/[0.06] p-6 lg:p-7 hover:border-[#c8b4a0]/40 hover:bg-[#141414] transition-all duration-500 cursor-pointer overflow-hidden"
+                >
+                  <div className="absolute top-0 left-0 bottom-0 w-1 bg-transparent group-hover:bg-[#c8b4a0] transition-colors duration-300" />
+
+                  <div className="flex items-center justify-between gap-4 mb-3">
+                    <div className="flex items-center gap-3">
+                      <span className="text-xs font-mono font-medium text-[#c8b4a0] bg-[#c8b4a0]/10 px-2.5 py-1 border border-[#c8b4a0]/20">
+                        {step.num}
+                      </span>
+                      <h4 className="text-lg font-medium text-white group-hover:text-[#c8b4a0] transition-colors">
+                        {step.label}
+                      </h4>
+                    </div>
+                    <span className="text-[10px] text-white/20 uppercase tracking-wider hidden sm:block">
+                      {step.tag}
+                    </span>
                   </div>
 
-                  <div className="flex-1 pt-1">
-                    <h4 className="text-base font-medium text-white mb-1 group-hover:text-[#c8b4a0] transition-colors">{step.label}</h4>
-                    <p className="text-sm text-white/30">{step.desc}</p>
-                  </div>
+                  <p className="text-sm text-white/40 leading-relaxed font-light group-hover:text-white/60 transition-colors">
+                    {step.desc}
+                  </p>
                 </div>
               ))}
             </div>

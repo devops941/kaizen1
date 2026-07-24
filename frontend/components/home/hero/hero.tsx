@@ -117,7 +117,7 @@ export function Hero() {
     return (
         <section
             ref={containerRef}
-            className="relative min-h-screen overflow-hidden bg-[#080808]"
+            className="relative  overflow-hidden bg-[#080808]"
             onMouseMove={handleMouseMove}
         >
             {/* Canvas Background */}
